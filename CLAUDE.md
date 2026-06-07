@@ -20,14 +20,16 @@ Todo es HTML, CSS y JavaScript vanilla en archivos directos.
 
 ```
 HugoRufete.github.io/
-├── index.html          ← Página principal con animación de nodos
+├── index.html          ← Página principal (solo HTML; enlaza css/ y js/)
 ├── CLAUDE.md           ← Este archivo
 ├── css/
-│   └── (futuros archivos CSS separados si se extraen)
+│   └── style.css       ← Todos los estilos (fuente única de verdad del diseño)
 ├── js/
-│   └── (futuros archivos JS separados si se extraen)
+│   └── main.js         ← Toda la lógica (nodos, partículas, panel, cursor, escala)
 ├── img/
-│   └── (capturas de proyectos, thumbnails, etc.)
+│   ├── README.md       ← Guía de cómo añadir/referenciar imágenes
+│   ├── ui/             ← Iconos, logos, fondos de la interfaz general
+│   └── proyectos/      ← Capturas y media por proyecto
 └── proyectos/
     └── nombre-proyecto/
         └── index.html  ← Página de detalle de cada proyecto
@@ -103,6 +105,33 @@ Cada sección del portfolio tiene su color fijo. No los cambies:
 - Funciones nombradas con verbo: `createNodes()`, `animateNodes()`, `openPanel()`
 - Separar en bloques comentados con `/= NOMBRE =/`
 - No usar jQuery, no usar librerías externas salvo Google Fonts
+
+---
+
+## Responsive — adaptación a móviles y resoluciones
+
+La web **debe verse bien en cualquier dispositivo** (móvil, tablet, desktop). Todo el responsive es **nativo**: media queries de CSS + un factor de escala en JS. **No se usan librerías** (Bootstrap, Tailwind, etc.) — no aplican a un layout de nodos posicionados por coordenadas y romperían la regla de "vanilla puro".
+
+### Principio: el diseño se ESCALA, no cambia de layout
+En todos los tamaños se mantiene la misma constelación de nodos; en pantallas pequeñas se reduce proporcionalmente. No hay un layout alternativo (lista/menú) en móvil. Si algún día se quiere eso, Hugo debe pedirlo explícitamente.
+
+### Cómo funciona el escalado (en `js/main.js`)
+- Existe un factor global `SCALE` calculado en `computeScale()`: `Math.min(1, minDim / 620)`, donde `minDim` es la dimensión más pequeña de la ventana.
+- **En desktop `SCALE` vale 1 → la web se ve idéntica al diseño original.** Nunca rompas esto: cualquier cambio en los nodos debe seguir multiplicando `s.radius` y `s.size` por `SCALE`.
+- El radio, el tamaño de los nodos y la amplitud de flotación se multiplican por `SCALE` en `createNodes()`, `updateLines()`, `floatNodes()` y `relayoutNodes()`.
+- Al redimensionar la ventana se recalcula (`resize` → `computeScale()` + `relayoutNodes()` + `updateLines()`).
+
+### Breakpoints CSS (en `css/style.css`, al final del archivo)
+- **`≤ 768px`** (tablet/móvil grande): panel = `min(420px, 90vw)`, HUD pegado a los bordes, se oculta `#hud-hint`, nodo central y etiquetas más pequeños.
+- **`≤ 480px`** (móvil estrecho): panel a pantalla completa (`100vw`).
+- **`(hover: none), (pointer: coarse)`** (táctil): se oculta el cursor personalizado (`#cursor`, `#cursor-ring`) y se restaura el cursor del sistema.
+
+### Reglas al desarrollar cualquier cosa nueva
+- **Siempre** dejar el `<meta name="viewport" content="width=device-width, initial-scale=1.0">` en el `<head>` (ya está en `index.html`).
+- Para tamaños de layout que deben adaptarse, usar unidades relativas: `clamp()`, `min()`, `max()`, `vw`, `vh` — no hardcodear `px` fijos en anchos de contenedores.
+- Todo efecto `:hover` necesita tener sentido sin ratón o un fallback para táctil (en móvil no hay hover).
+- Cualquier elemento nuevo posicionado con JS por coordenadas debe multiplicar sus medidas por `SCALE`.
+- **Probar siempre en móvil antes de subir**: DevTools (F12) → `Ctrl+Shift+M` (device toolbar) → comprobar al menos iPhone SE (375px), iPad (768px) y desktop.
 
 ---
 
@@ -189,6 +218,8 @@ GitHub Pages tarda entre 30 segundos y 2 minutos en reflejar los cambios.
 - No añadir frameworks (React, Vue, etc.) sin que Hugo lo decida explícitamente
 - No usar `alert()`, `console.log()` en producción
 - No hardcodear URLs absolutas excepto las de GitHub y LinkedIn de Hugo
+- No romper el responsive: en desktop `SCALE` debe seguir valiendo 1, y todo nodo posicionado por JS debe multiplicar sus medidas por `SCALE`
+- No añadir librerías de responsive (Bootstrap, Tailwind, etc.) — el responsive es nativo (media queries + escala JS)
 
 ---
 
