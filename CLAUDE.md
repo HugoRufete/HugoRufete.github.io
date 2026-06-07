@@ -25,7 +25,8 @@ HugoRufete.github.io/
 ├── css/
 │   └── style.css       ← Todos los estilos (fuente única de verdad del diseño)
 ├── js/
-│   └── main.js         ← Toda la lógica (nodos, partículas, panel, cursor, escala)
+│   ├── data.js         ← Contenido del portfolio (array SECTIONS: textos, colores, metadatos)
+│   └── main.js         ← Solo lógica (nodos, partículas, panel, cursor, escala)
 ├── img/
 │   ├── README.md       ← Guía de cómo añadir/referenciar imágenes
 │   ├── ui/             ← Iconos, logos, fondos de la interfaz general
@@ -140,7 +141,7 @@ En todos los tamaños se mantiene la misma constelación de nodos; en pantallas 
 1. Crea la carpeta `proyectos/nombre-del-proyecto/`
 2. Dentro crea `index.html` con la plantilla de página de proyecto
 3. Añade imágenes en `img/proyectos/nombre-del-proyecto/`
-4. En `index.html` principal, actualiza el contenido HTML del panel correspondiente en el array `SECTIONS`
+4. En `js/data.js`, actualiza el contenido HTML del panel correspondiente en el array `SECTIONS` (un blurb corto + enlace a la página del proyecto). El detalle largo va en el `index.html` del proyecto.
 
 ### Plantilla mínima de página de proyecto
 ```html
@@ -165,7 +166,7 @@ En todos los tamaños se mantiene la misma constelación de nodos; en pantallas 
 
 ## Cómo actualizar contenido existente
 
-Para cambiar el texto de una sección del portfolio, busca en `index.html` el array `SECTIONS` y modifica la propiedad `content` del objeto correspondiente. El contenido acepta HTML inline.
+Para cambiar el texto de una sección del portfolio, busca en `js/data.js` el array `SECTIONS` y modifica la propiedad `content` del objeto correspondiente. El contenido acepta HTML inline.
 
 ```javascript
 // Ejemplo: actualizar sección de experiencia
