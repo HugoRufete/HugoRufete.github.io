@@ -194,7 +194,12 @@ function resizeCanvas() {
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-window.addEventListener('resize', () => { resizeCanvas(); updateLines(); });
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  computeScale();
+  relayoutNodes();
+  updateLines();
+});
 resizeCanvas();
 
 function initParticles() {
@@ -239,6 +244,16 @@ const panel   = document.getElementById('panel');
 const nodeEls = {};
 const lineEls = {};
 
+/* Factor de escala responsive: a escala 1 la constelación ocupa ~620px.
+   En pantallas más pequeñas se reduce proporcionalmente para que quepa
+   sin que los nodos se salgan ni se solapen (la proporción se mantiene). */
+let SCALE = 1;
+function computeScale() {
+  const minDim = Math.min(window.innerWidth, window.innerHeight);
+  SCALE = Math.min(1, minDim / 620);
+}
+computeScale();
+
 function polarToXY(angleDeg, radius) {
   const rad = (angleDeg - 90) * Math.PI / 180;
   return { x: Math.cos(rad) * radius, y: Math.sin(rad) * radius };
@@ -254,11 +269,12 @@ function createNodes() {
     const el = document.createElement('div');
     el.className = 'section-node';
     el.id = 'node-' + s.id;
-    const pos = polarToXY(s.angle, s.radius);
+    const size = s.size * SCALE;
+    const pos = polarToXY(s.angle, s.radius * SCALE);
     el.style.cssText = `
-      width:${s.size}px; height:${s.size}px;
-      left: calc(50% + ${pos.x}px - ${s.size/2}px);
-      top:  calc(50% + ${pos.y}px - ${s.size/2}px);
+      width:${size}px; height:${size}px;
+      left: calc(50% + ${pos.x}px - ${size/2}px);
+      top:  calc(50% + ${pos.y}px - ${size/2}px);
       color: ${s.color};
       border-color: ${s.border};
       background: ${s.bg};
@@ -286,12 +302,26 @@ function updateLines() {
   const cx = r.width  / 2;
   const cy = r.height / 2;
   SECTIONS.forEach(s => {
-    const pos = polarToXY(s.angle, s.radius);
+    const pos = polarToXY(s.angle, s.radius * SCALE);
     const line = lineEls[s.id];
     line.setAttribute('x1', cx);
     line.setAttribute('y1', cy);
     line.setAttribute('x2', cx + pos.x);
     line.setAttribute('y2', cy + pos.y);
+  });
+}
+
+/* Recoloca y redimensiona los nodos tras un cambio de tamaño de ventana. */
+function relayoutNodes() {
+  SECTIONS.forEach(s => {
+    const el = nodeEls[s.id];
+    if (!el) return;
+    const size = s.size * SCALE;
+    const pos = polarToXY(s.angle, s.radius * SCALE);
+    el.style.width  = size + 'px';
+    el.style.height = size + 'px';
+    el.style.left = `calc(50% + ${pos.x}px - ${size/2}px)`;
+    el.style.top  = `calc(50% + ${pos.y}px - ${size/2}px)`;
   });
 }
 
@@ -325,10 +355,11 @@ function floatNodes() {
     const el = nodeEls[s.id];
     if (el.style.opacity !== '1') return;
     const f = floatOffsets[i];
-    const dy = Math.sin(t * f.speed + f.phase) * f.amp;
-    const pos = polarToXY(s.angle, s.radius);
-    el.style.left = `calc(50% + ${pos.x}px - ${s.size/2}px)`;
-    el.style.top  = `calc(50% + ${pos.y + dy}px - ${s.size/2}px)`;
+    const dy = Math.sin(t * f.speed + f.phase) * f.amp * SCALE;
+    const size = s.size * SCALE;
+    const pos = polarToXY(s.angle, s.radius * SCALE);
+    el.style.left = `calc(50% + ${pos.x}px - ${size/2}px)`;
+    el.style.top  = `calc(50% + ${pos.y + dy}px - ${size/2}px)`;
   });
   updateLines();
   requestAnimationFrame(floatNodes);

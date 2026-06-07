@@ -433,3 +433,44 @@ body:has(.section-node:hover) #cursor-ring { width: 52px; height: 52px; border-c
   0%, 100% { opacity: 1; }
   50% { opacity: .3; }
 }
+
+/* =========================================
+   RESPONSIVE — TABLET & MÓVIL
+   ========================================= */
+
+/* Tablet y móvil grande (≤ 768px) */
+@media (max-width: 768px) {
+  /* El panel nunca debe ser más ancho que la pantalla */
+  #panel {
+    width: min(420px, 90vw);
+    right: calc(-1 * min(420px, 90vw) - 20px);
+    padding: 56px 28px 32px;
+  }
+  /* HUD más pegado a los bordes para ganar espacio */
+  #hud-name   { top: 18px; left: 18px; }
+  #hud-status { top: 18px; right: 18px; }
+  #hud-links  { bottom: 18px; left: 18px; gap: 14px; }
+  #hud-hint   { display: none; }   /* el hint "selecciona un nodo" estorba en pantallas pequeñas */
+  /* Etiquetas de nodo algo más pequeñas para que quepan al escalar */
+  .section-node .sn-icon  { font-size: 16px; }
+  .section-node .sn-label { font-size: 7px; letter-spacing: 1px; }
+  /* Nodo central proporcional a la constelación encogida */
+  #center-node { width: 104px; height: 104px; }
+  #center-node .cn-name { font-size: 11px; }
+  #center-node .cn-role { font-size: 6.5px; }
+}
+
+/* Móvil estrecho (≤ 480px): panel a pantalla completa */
+@media (max-width: 480px) {
+  #panel {
+    width: 100vw;
+    right: -100vw;
+    padding: 56px 22px 28px;
+  }
+}
+
+/* Dispositivos táctiles: el cursor personalizado no aporta nada sin ratón */
+@media (hover: none), (pointer: coarse) {
+  #cursor, #cursor-ring { display: none; }
+  html, body { cursor: auto; }
+}
