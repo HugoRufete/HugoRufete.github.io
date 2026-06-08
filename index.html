@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Hugo Rufete — Game Developer & Technical Artist. Portfolio de desarrollo de videojuegos, animación procedural e iluminación dinámica.">
+<meta name="description" content="Hugo Rufete — Game Developer & Technical Artist. Portfolio of game development, procedural animation and dynamic lighting.">
 <title>Hugo Rufete — Game Developer</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -23,6 +23,23 @@
 
 <!-- Particle canvas -->
 <canvas id="bg-canvas"></canvas>
+
+<!-- Site header (fijo arriba) -->
+<header id="site-header">
+  <div class="brand">Hugo Rufete<span>.</span></div>
+  <nav class="site-nav">
+    <a href="https://github.com/HugoRufete" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/hugorufete" target="_blank">LinkedIn</a>
+    <a href="mailto:tu@email.com">Email</a>
+  </nav>
+</header>
+
+<!-- Hero (primera pantalla, antes de los nodos) -->
+<section id="hero">
+  <h1 class="hero-title">Hugo Rufete</h1>
+  <p class="hero-sub">Game Developer &amp; Technical Artist</p>
+  <div class="scroll-hint">scroll ↓</div>
+</section>
 
 <!-- Main app -->
 <div id="app">
@@ -45,7 +62,7 @@
 <!-- Side panel -->
 <div id="panel">
   <button id="panel-close">✕</button>
-  <div class="panel-eyebrow">// sección</div>
+  <div class="panel-eyebrow">// section</div>
   <h2 id="panel-title"></h2>
   <div id="panel-subtitle"></div>
   <div id="panel-content"></div>
@@ -61,8 +78,8 @@
   <a href="mailto:tu@email.com">Email</a>
   <a href="https://linkedin.com/in/hugorufete" target="_blank">LinkedIn</a>
 </div>
-<div id="hud-hint">// selecciona un nodo para explorar</div>
-<div id="hud-status">disponible para proyectos</div>
+<div id="hud-hint">// select a node to explore</div>
+<div id="hud-status">available for projects</div>
 
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>

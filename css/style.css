@@ -18,9 +18,15 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
-html, body {
-  width: 100%; height: 100%;
-  overflow: hidden;
+html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;   /* nunca scroll horizontal (el panel vive fuera de pantalla a la derecha) */
+  /* overflow-y queda en auto → la página crece con el contenido y aparece scroll vertical */
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-head);
@@ -111,6 +117,91 @@ body:has(.section-node:hover) #cursor-ring { width: 52px; height: 52px; border-c
 @keyframes barFill { to { width: 100%; } }
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   SITE HEADER — fijo en la parte superior
+   ========================================= */
+#site-header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  background: rgba(6,8,15,0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,229,255,0.12);
+  z-index: 150;   /* sobre el contenido, pero bajo el panel lateral (200) y la intro (500) */
+}
+#site-header .brand {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+#site-header .brand span { color: var(--accent); }
+#site-header .site-nav { display: flex; gap: 26px; }
+#site-header .site-nav a {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+#site-header .site-nav a:hover { color: var(--accent); }
+
+/* El header asume el rol de estos HUD superiores → se ocultan para no solaparse */
+#hud-name, #hud-status { display: none; }
+
+/* =========================================
+   HERO — primera pantalla (antes de los nodos)
+   ========================================= */
+#hero {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 0 24px;
+}
+.hero-title {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(40px, 9vw, 96px);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.hero-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 2.4vw, 14px);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0);   opacity: .5; }
+  50%      { transform: translateY(6px); opacity: 1;  }
 }
 
 /* =========================================
@@ -440,6 +531,11 @@ body:has(.section-node:hover) #cursor-ring { width: 52px; height: 52px; border-c
 
 /* Tablet y móvil grande (≤ 768px) */
 @media (max-width: 768px) {
+  /* Header más compacto */
+  #site-header { height: 56px; padding: 0 18px; }
+  #site-header .brand { font-size: 13px; }
+  #site-header .site-nav { gap: 16px; }
+  #site-header .site-nav a { font-size: 9px; letter-spacing: 1.5px; }
   /* El panel nunca debe ser más ancho que la pantalla */
   #panel {
     width: min(420px, 90vw);
@@ -447,10 +543,8 @@ body:has(.section-node:hover) #cursor-ring { width: 52px; height: 52px; border-c
     padding: 56px 28px 32px;
   }
   /* HUD más pegado a los bordes para ganar espacio */
-  #hud-name   { top: 18px; left: 18px; }
-  #hud-status { top: 18px; right: 18px; }
   #hud-links  { bottom: 18px; left: 18px; gap: 14px; }
-  #hud-hint   { display: none; }   /* el hint "selecciona un nodo" estorba en pantallas pequeñas */
+  #hud-hint   { display: none; }   /* el hint "select a node" estorba en pantallas pequeñas */
   /* Etiquetas de nodo algo más pequeñas para que quepan al escalar */
   .section-node .sn-icon  { font-size: 16px; }
   .section-node .sn-label { font-size: 7px; letter-spacing: 1px; }

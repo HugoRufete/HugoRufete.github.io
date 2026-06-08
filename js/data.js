@@ -10,11 +10,14 @@
 
    El contenido LARGO de cada proyecto concreto va en su propia página:
    proyectos/nombre-proyecto/index.html  (no aquí).
+
+   NOTA: los `id` se mantienen en español porque son identificadores internos
+   (se usan para generar IDs de nodo como `node-proyectos`), no texto visible.
    ========================================= */
 const SECTIONS = [
   {
     id: 'proyectos',
-    label: 'Proyectos',
+    label: 'Projects',
     icon: '⬡',
     color: '#00e5ff',
     border: 'rgba(0,229,255,0.35)',
@@ -22,10 +25,10 @@ const SECTIONS = [
     size: 90,
     angle: 0,
     radius: 210,
-    title: 'Proyectos',
+    title: 'Projects',
     subtitle: 'Unity · C# · Game Systems',
     content: `
-      <p>Colección de proyectos técnicos centrados en el desarrollo de videojuegos: desde mecánicas de juego complejas hasta sistemas de simulación y optimización.</p>
+      <p>A collection of technical projects focused on game development: from complex gameplay mechanics to simulation and optimization systems.</p>
       <div>
         <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">Unity 6</span>
         <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">C#</span>
@@ -33,13 +36,13 @@ const SECTIONS = [
         <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">AI / NavMesh</span>
         <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">ECS</span>
       </div>
-      <p>→ Desarrollo de mecánicas de juego<br>→ Sistemas de combate y física<br>→ Generación procedural de contenido<br>→ Optimización de rendimiento (LOD, GPU Instancing, Culling)</p>
-      <p style="color:#546e8a">Los proyectos se irán añadiendo aquí con capturas, vídeos y descripción técnica detallada.</p>
+      <p>→ Gameplay mechanics development<br>→ Combat and physics systems<br>→ Procedural content generation<br>→ Performance optimization (LOD, GPU Instancing, Culling)</p>
+      <p style="color:#546e8a">Projects will be added here with screenshots, videos and detailed technical descriptions.</p>
     `
   },
   {
     id: 'animacion',
-    label: 'Animación',
+    label: 'Animation',
     icon: '◈',
     color: '#a78bfa',
     border: 'rgba(167,139,250,0.35)',
@@ -47,22 +50,22 @@ const SECTIONS = [
     size: 84,
     angle: 60,
     radius: 225,
-    title: 'Animación Procedural',
+    title: 'Procedural Animation',
     subtitle: 'IK · Blend Trees · Motion',
     content: `
-      <p>Técnicas avanzadas de animación procedural e integración con sistemas de juego en tiempo real, enfocadas en naturalidad y eficiencia.</p>
+      <p>Advanced procedural animation techniques and integration with real-time game systems, focused on naturalness and efficiency.</p>
       <div>
         <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Inverse Kinematics</span>
         <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Blend Trees</span>
         <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Rigging</span>
         <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Motion Matching</span>
       </div>
-      <p>→ IK de extremidades en tiempo real<br>→ Blend trees dinámicos por estado de juego<br>→ Animación procedural de personajes<br>→ Sistemas de ragdoll e impacto físico</p>
+      <p>→ Real-time limb IK<br>→ Dynamic blend trees driven by game state<br>→ Procedural character animation<br>→ Ragdoll and physical impact systems</p>
     `
   },
   {
     id: 'iluminacion',
-    label: 'Iluminación',
+    label: 'Lighting',
     icon: '◉',
     color: '#f59e0b',
     border: 'rgba(245,158,11,0.35)',
@@ -70,10 +73,10 @@ const SECTIONS = [
     size: 86,
     angle: 120,
     radius: 215,
-    title: 'Iluminación Dinámica',
-    subtitle: 'Rendering · Shaders · Optimización',
+    title: 'Dynamic Lighting',
+    subtitle: 'Rendering · Shaders · Optimization',
     content: `
-      <p>Sistemas de iluminación dinámica diseñados para rendimiento real en múltiples plataformas, equilibrando calidad visual y coste computacional.</p>
+      <p>Dynamic lighting systems designed for real performance across multiple platforms, balancing visual quality and computational cost.</p>
       <h4>// pipelines</h4>
       <div>
         <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">URP</span>
@@ -82,8 +85,8 @@ const SECTIONS = [
         <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">Shader Graph</span>
         <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">GI</span>
       </div>
-      <h4>// especialidades</h4>
-      <p>→ Global Illumination bakeada y en tiempo real<br>→ Shaders custom para efectos especiales<br>→ Técnicas de culling, LOD y batching<br>→ Post-processing y color grading</p>
+      <h4>// specialties</h4>
+      <p>→ Baked and real-time Global Illumination<br>→ Custom shaders for special effects<br>→ Culling, LOD and batching techniques<br>→ Post-processing and color grading</p>
     `
   },
   {
@@ -96,24 +99,24 @@ const SECTIONS = [
     size: 82,
     angle: 180,
     radius: 210,
-    title: 'Stack Técnico',
-    subtitle: 'Herramientas · Lenguajes · Flujo',
+    title: 'Technical Stack',
+    subtitle: 'Tools · Languages · Workflow',
     content: `
-      <p>Conjunto de tecnologías y herramientas utilizadas a lo largo de proyectos de desarrollo de videojuegos profesionales y personales.</p>
-      <h4>// motor y lenguajes</h4>
+      <p>A set of technologies and tools used across professional and personal game development projects.</p>
+      <h4>// engine & languages</h4>
       <div>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Unity</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">C#</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">HLSL</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Python</span>
       </div>
-      <h4>// arte y 3D</h4>
+      <h4>// art & 3D</h4>
       <div>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Blender</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Substance Painter</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Shader Graph</span>
       </div>
-      <h4>// flujo de trabajo</h4>
+      <h4>// workflow</h4>
       <div>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Git</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Plastic SCM</span>
@@ -124,7 +127,7 @@ const SECTIONS = [
   },
   {
     id: 'diseno',
-    label: 'Diseño',
+    label: 'Design',
     icon: '⬟',
     color: '#f472b6',
     border: 'rgba(244,114,182,0.35)',
@@ -132,21 +135,21 @@ const SECTIONS = [
     size: 84,
     angle: 240,
     radius: 220,
-    title: 'Proceso de Diseño',
-    subtitle: 'Concepto · Prototipado · Arte',
+    title: 'Design Process',
+    subtitle: 'Concept · Prototyping · Art',
     content: `
-      <p>Metodología y proceso creativo desde la ideación hasta la materialización de conceptos de juego, integrando diseño técnico y artístico.</p>
-      <h4>// proceso</h4>
-      <p>→ Ideación y sketching de mecánicas<br>→ Prototipado rápido en Unity<br>→ Documentación GDD<br>→ Playtesting e iteración</p>
-      <h4>// diseño de concepto</h4>
-      <p>→ Escenas y environments<br>→ Concept art de personajes<br>→ UI/UX para videojuegos<br>→ Narrativa visual y mood boards</p>
-      <h4>// próximamente</h4>
-      <p style="color:#546e8a">Galería de conceptos, sketches y procesos de creación.</p>
+      <p>Methodology and creative process from ideation to the realization of game concepts, integrating technical and artistic design.</p>
+      <h4>// process</h4>
+      <p>→ Mechanics ideation and sketching<br>→ Rapid prototyping in Unity<br>→ GDD documentation<br>→ Playtesting and iteration</p>
+      <h4>// concept design</h4>
+      <p>→ Scenes and environments<br>→ Character concept art<br>→ UI/UX for games<br>→ Visual narrative and mood boards</p>
+      <h4>// coming soon</h4>
+      <p style="color:#546e8a">Gallery of concepts, sketches and creation processes.</p>
     `
   },
   {
     id: 'experiencia',
-    label: 'Experiencia',
+    label: 'Experience',
     icon: '◇',
     color: '#818cf8',
     border: 'rgba(129,140,248,0.35)',
@@ -154,15 +157,15 @@ const SECTIONS = [
     size: 80,
     angle: 300,
     radius: 212,
-    title: 'Experiencia',
-    subtitle: 'Trayectoria · Formación',
+    title: 'Experience',
+    subtitle: 'Career · Education',
     content: `
-      <p>Trayectoria profesional y formación en desarrollo de videojuegos y programación técnica.</p>
-      <h4>// experiencia profesional</h4>
-      <p style="color:#546e8a">Añade aquí tus posiciones, empresas y proyectos profesionales.</p>
-      <h4>// formación</h4>
-      <p style="color:#546e8a">Añade aquí tu formación académica y cursos relevantes.</p>
-      <h4>// contacto</h4>
+      <p>Professional career and education in game development and technical programming.</p>
+      <h4>// professional experience</h4>
+      <p style="color:#546e8a">Add your positions, companies and professional projects here.</p>
+      <h4>// education</h4>
+      <p style="color:#546e8a">Add your academic background and relevant courses here.</p>
+      <h4>// contact</h4>
       <a class="panel-link" href="mailto:tu@email.com">
         <span class="link-icon">✉</span> tu@email.com
       </a>

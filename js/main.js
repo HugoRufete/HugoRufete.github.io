@@ -223,10 +223,28 @@ document.getElementById('panel-close').addEventListener('click', () => {
 createNodes();
 updateLines();
 
+/* Al terminar la intro se oculta la pantalla de carga y queda a la vista el
+   hero (primera pantalla). Los nodos están más abajo, bajo la línea de
+   flotación, y se revelan al hacer scroll hasta su sección. */
 setTimeout(() => {
-  const overlay = document.getElementById('intro-overlay');
-  overlay.classList.add('hidden');
-  app.classList.add('visible');
-  setTimeout(animateNodes, 400);
-  setTimeout(floatNodes,   1200);
+  document.getElementById('intro-overlay').classList.add('hidden');
 }, 2800);
+
+/* =========================================
+   SCROLL REVEAL — los nodos aparecen al entrar en viewport
+   ========================================= */
+let nodesRevealed = false;
+function revealNodes() {
+  if (nodesRevealed) return;
+  nodesRevealed = true;
+  app.classList.add('visible');
+  animateNodes();
+  setTimeout(floatNodes, 800);
+}
+
+const appObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) revealNodes();
+  });
+}, { threshold: 0.3 });
+appObserver.observe(app);
