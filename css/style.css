@@ -175,6 +175,29 @@ body:has(.section-node:hover) #cursor-ring { width: 52px; height: 52px; border-c
   gap: 16px;
   padding: 0 24px;
 }
+/* Vídeo de fondo del hero — cubre SOLO la primera pantalla */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;     /* llena el viewport sin deformarse */
+  z-index: 0;            /* sobre las partículas, bajo el contenido del hero */
+  pointer-events: none;
+}
+/* Velo oscuro sobre el vídeo para que el texto se lea sobre cualquier fotograma */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,8,15,0.35), rgba(6,8,15,0.70));
+  z-index: 1;
+  pointer-events: none;
+}
+/* El contenido del hero queda por encima del vídeo y del velo */
+.hero-title,
+.hero-sub,
+.scroll-hint { z-index: 2; }
+.hero-title, .hero-sub { position: relative; }
 .hero-title {
   font-family: var(--font-head);
   font-weight: 800;
