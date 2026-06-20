@@ -19,7 +19,7 @@ const SECTIONS = [
     id: 'proyectos',
     label: 'Projects',
     icon: '⬡',
-    color: '#00e5ff',
+    color: '#A4292E',
     border: 'rgba(0,229,255,0.35)',
     bg: 'rgba(0,229,255,0.05)',
     size: 90,
@@ -30,11 +30,11 @@ const SECTIONS = [
     content: `
       <p>A collection of technical projects focused on game development: from complex gameplay mechanics to simulation and optimization systems.</p>
       <div>
-        <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">Unity 6</span>
-        <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">C#</span>
-        <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">Physics</span>
-        <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">AI / NavMesh</span>
-        <span class="tag" style="color:#00e5ff;border-color:rgba(0,229,255,0.3)">ECS</span>
+        <span class="tag">Unity 6</span>
+        <span class="tag">C#</span>
+        <span class="tag">Physics</span>
+        <span class="tag">AI / NavMesh</span>
+        <span class="tag">ECS</span>
       </div>
       <p>→ Gameplay mechanics development<br>→ Combat and physics systems<br>→ Procedural content generation<br>→ Performance optimization (LOD, GPU Instancing, Culling)</p>
       <p style="color:#546e8a">Projects will be added here with screenshots, videos and detailed technical descriptions.</p>
@@ -44,7 +44,7 @@ const SECTIONS = [
     id: 'animacion',
     label: 'Animation',
     icon: '◈',
-    color: '#a78bfa',
+    color: '#A4292E',
     border: 'rgba(167,139,250,0.35)',
     bg: 'rgba(167,139,250,0.05)',
     size: 84,
@@ -55,10 +55,10 @@ const SECTIONS = [
     content: `
       <p>Advanced procedural animation techniques and integration with real-time game systems, focused on naturalness and efficiency.</p>
       <div>
-        <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Inverse Kinematics</span>
-        <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Blend Trees</span>
-        <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Rigging</span>
-        <span class="tag" style="color:#a78bfa;border-color:rgba(167,139,250,0.3)">Motion Matching</span>
+        <span class="tag">Inverse Kinematics</span>
+        <span class="tag">Blend Trees</span>
+        <span class="tag">Rigging</span>
+        <span class="tag">Motion Matching</span>
       </div>
       <p>→ Real-time limb IK<br>→ Dynamic blend trees driven by game state<br>→ Procedural character animation<br>→ Ragdoll and physical impact systems</p>
     `
@@ -67,7 +67,7 @@ const SECTIONS = [
     id: 'iluminacion',
     label: 'Lighting',
     icon: '◉',
-    color: '#f59e0b',
+    color: '#A4292E',
     border: 'rgba(245,158,11,0.35)',
     bg: 'rgba(245,158,11,0.05)',
     size: 86,
@@ -79,11 +79,11 @@ const SECTIONS = [
       <p>Dynamic lighting systems designed for real performance across multiple platforms, balancing visual quality and computational cost.</p>
       <h4>pipelines</h4>
       <div>
-        <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">URP</span>
-        <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">HDRP</span>
-        <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">HLSL</span>
-        <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">Shader Graph</span>
-        <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">GI</span>
+        <span class="tag">URP</span>
+        <span class="tag">HDRP</span>
+        <span class="tag">HLSL</span>
+        <span class="tag">Shader Graph</span>
+        <span class="tag">GI</span>
       </div>
       <h4>specialties</h4>
       <p>→ Baked and real-time Global Illumination<br>→ Custom shaders for special effects<br>→ Culling, LOD and batching techniques<br>→ Post-processing and color grading</p>
@@ -93,7 +93,7 @@ const SECTIONS = [
     id: 'skills',
     label: 'Skills',
     icon: '◎',
-    color: '#34d399',
+    color: '#A4292E',
     border: 'rgba(52,211,153,0.35)',
     bg: 'rgba(52,211,153,0.05)',
     size: 82,
@@ -105,23 +105,23 @@ const SECTIONS = [
       <p>A set of technologies and tools used across professional and personal game development projects.</p>
       <h4>engine & languages</h4>
       <div>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Unity</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">C#</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">HLSL</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Python</span>
+        <span class="tag">Unity</span>
+        <span class="tag">C#</span>
+        <span class="tag">HLSL</span>
+        <span class="tag">Python</span>
       </div>
       <h4>art & 3D</h4>
       <div>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Blender</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Substance Painter</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Shader Graph</span>
+        <span class="tag">Blender</span>
+        <span class="tag">Substance Painter</span>
+        <span class="tag">Shader Graph</span>
       </div>
       <h4>workflow</h4>
       <div>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Git</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Plastic SCM</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Jira</span>
-        <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">VS Code</span>
+        <span class="tag">Git</span>
+        <span class="tag">Plastic SCM</span>
+        <span class="tag">Jira</span>
+        <span class="tag">VS Code</span>
       </div>
     `
   },
@@ -129,7 +129,7 @@ const SECTIONS = [
     id: 'diseno',
     label: 'Design',
     icon: '⬟',
-    color: '#f472b6',
+    color: '#A4292E',
     border: 'rgba(244,114,182,0.35)',
     bg: 'rgba(244,114,182,0.05)',
     size: 84,
@@ -151,7 +151,7 @@ const SECTIONS = [
     id: 'experiencia',
     label: 'Experience',
     icon: '◇',
-    color: '#818cf8',
+    color: '#A4292E',
     border: 'rgba(129,140,248,0.35)',
     bg: 'rgba(129,140,248,0.05)',
     size: 80,

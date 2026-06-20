@@ -53,24 +53,20 @@ Mantén siempre esta paleta y estilo. No cambies la estética sin que Hugo lo pi
 
 ### Paleta de colores
 ```css
---bg:        #06080f   /* fondo principal oscuro */
+--bg:        #06080f   /* fondo principal (negro) */
 --surface:   #0d1220   /* superficies de panel */
---accent:    #00e5ff   /* cyan principal — color dominante */
---accent2:   #7c3aed   /* violeta */
---accent3:   #f59e0b   /* ámbar */
---text:      #e8eaf6   /* texto principal */
+--accent:    #A4292E   /* ROJO PANTONE — color de acento dominante */
+--text:      #e8eaf6   /* texto principal (claro, para cuerpo legible) */
 --muted:     #546e8a   /* texto secundario */
 --muted2:    #334155   /* bordes y separadores */
 ```
 
-### Colores por sección
-Cada sección del portfolio tiene su color fijo. No los cambies:
-- Proyectos → `#00e5ff` (cyan)
-- Animación procedural → `#a78bfa` (violeta claro)
-- Iluminación → `#f59e0b` (ámbar)
-- Skills → `#34d399` (verde esmeralda)
-- Diseño → `#f472b6` (rosa)
-- Experiencia → `#818cf8` (índigo)
+### Esquema de color: negro + rojo pantone (dos tonos)
+La web es **bitono**: fondo negro + acento **rojo pantone `#A4292E`**. No introducir otros colores sin que Hugo lo pida.
+- **Fondo**: negro (`--bg`).
+- **Texto de cuerpo**: claro (`--text`) para legibilidad.
+- **Todo lo "de marca" va en rojo `#A4292E`**: nombre, encabezados `#`, bordes, glow de tarjetas, tags, enlaces y negritas destacadas (`<b>`).
+- Las secciones **comparten el mismo acento rojo** (en `js/data.js` todas tienen `color: '#A4292E'`). El acento sigue inyectándose por sección vía `--sc`, así que reintroducir un color por sección en el futuro es trivial (basta cambiar su `color` en `data.js`).
 
 ### Tipografía
 - Títulos y UI: `Syne` — peso 400, 700, 800
@@ -215,7 +211,7 @@ GitHub Pages tarda entre 30 segundos y 2 minutos en reflejar los cambios.
 - No instalar npm ni crear `package.json` — es una web estática pura
 - No cambiar las fuentes (Syne + JetBrains Mono son parte de la identidad)
 - No usar fondo claro ni cambiar el tema oscuro
-- No cambiar los colores asignados a cada sección
+- No romper el esquema bitono negro + rojo pantone (`#A4292E`); no introducir otros colores de acento sin que Hugo lo pida
 - No añadir frameworks (React, Vue, etc.) sin que Hugo lo decida explícitamente
 - No usar `alert()`, `console.log()` en producción
 - No hardcodear URLs absolutas excepto las de GitHub y LinkedIn de Hugo

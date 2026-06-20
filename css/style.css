@@ -7,9 +7,7 @@
   --bg:        #06080f;
   --surface:   #0d1220;
   --surface2:  #111827;
-  --accent:    #00e5ff;
-  --accent2:   #7c3aed;
-  --accent3:   #f59e0b;
+  --accent:    #A4292E;
   --text:      #e8eaf6;
   --muted:     #546e8a;
   --muted2:    #334155;
@@ -53,7 +51,7 @@ a { color: inherit; }
 #cursor-ring {
   position: fixed;
   width: 36px; height: 36px;
-  border: 1px solid rgba(0,229,255,0.4);
+  border: 1px solid rgba(164,41,46,0.4);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
@@ -63,7 +61,7 @@ a { color: inherit; }
 body:has(a:hover) #cursor,
 body:has(.card:hover) #cursor { width: 16px; height: 16px; }
 body:has(a:hover) #cursor-ring,
-body:has(.card:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(0,229,255,0.7); }
+body:has(.card:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(164,41,46,0.7); }
 
 /* =========================================
    PARTICLE CANVAS
@@ -201,6 +199,7 @@ main {
   line-height: 1;
   text-transform: uppercase;
   margin-bottom: 18px;
+  color: var(--accent);
 }
 .identity-sub {
   font-family: var(--font-head);
@@ -211,7 +210,7 @@ main {
   line-height: 1.5;
   margin-bottom: 22px;
 }
-.identity-sub b { color: var(--text); font-weight: 700; }
+.identity-sub b { color: var(--accent); font-weight: 700; }
 
 /* Social links (sidebar + footer) */
 .social-links {
@@ -392,6 +391,7 @@ main {
 /* Contenido interno de las secciones (viene de data.js) */
 .card p { font-size: 14px; color: #9fb0c8; line-height: 1.85; margin-bottom: 12px; }
 .card p:last-child { margin-bottom: 0; }
+.card b, .card strong { color: var(--sc); font-weight: 700; }
 .card h4 {
   font-family: var(--font-mono);
   font-size: 11px;
