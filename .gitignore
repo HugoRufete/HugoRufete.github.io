@@ -5,3 +5,7 @@ CLAUDE.md
 node_modules/
 package.json
 package-lock.json
+
+# Volcados HTML de la web antigua de Wix — solo referencia local para traspasar texto, no publicar
+wix-web-pages_text/
+copia-de-projects
