@@ -33,25 +33,20 @@ function resizeCanvas() {
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-window.addEventListener('resize', () => {
-  resizeCanvas();
-  computeScale();
-  relayoutNodes();
-  updateLines();
-});
+window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
 function initParticles() {
   particles = [];
-  const count = Math.floor((canvas.width * canvas.height) / 14000);
+  const count = Math.floor((canvas.width * canvas.height) / 16000);
   for (let i = 0; i < count; i++) {
     particles.push({
       x:  Math.random() * canvas.width,
       y:  Math.random() * canvas.height,
-      vx: (Math.random() - .5) * 0.25,
-      vy: (Math.random() - .5) * 0.25,
+      vx: (Math.random() - .5) * 0.22,
+      vy: (Math.random() - .5) * 0.22,
       r:  Math.random() * 1.2 + .4,
-      a:  Math.random() * 0.35 + 0.08,
+      a:  Math.random() * 0.30 + 0.06,
     });
   }
 }
@@ -75,176 +70,71 @@ initParticles();
 drawParticles();
 
 /* =========================================
-   NODE SYSTEM
+   RENDER — TOC (sidebar) + secciones (contenido)
+   Construye la web a partir de SECTIONS (única fuente de verdad).
    ========================================= */
-const app     = document.getElementById('app');
-const svgEl   = document.getElementById('connectors');
-const panel   = document.getElementById('panel');
-const nodeEls = {};
-const lineEls = {};
+const tocEl      = document.querySelector('.toc');
+const sectionsEl = document.getElementById('sections');
 
-/* Factor de escala responsive: a escala 1 la constelación ocupa ~620px.
-   En pantallas más pequeñas se reduce proporcionalmente para que quepa
-   sin que los nodos se salgan ni se solapen (la proporción se mantiene). */
-let SCALE = 1;
-function computeScale() {
-  const minDim = Math.min(window.innerWidth, window.innerHeight);
-  SCALE = Math.min(1, minDim / 620);
-}
-computeScale();
+SECTIONS.forEach(s => {
+  /* Índice lateral */
+  const li = document.createElement('li');
+  const a  = document.createElement('a');
+  a.href = '#' + s.id;
+  a.textContent = s.label;
+  a.style.setProperty('--sc-item', s.color);
+  a.dataset.target = s.id;
+  li.appendChild(a);
+  tocEl.appendChild(li);
 
-function polarToXY(angleDeg, radius) {
-  const rad = (angleDeg - 90) * Math.PI / 180;
-  return { x: Math.cos(rad) * radius, y: Math.sin(rad) * radius };
-}
-
-function getCenter() {
-  const r = app.getBoundingClientRect();
-  return { x: r.width / 2, y: r.height / 2 };
-}
-
-function createNodes() {
-  SECTIONS.forEach(s => {
-    const el = document.createElement('div');
-    el.className = 'section-node';
-    el.id = 'node-' + s.id;
-    const size = s.size * SCALE;
-    const pos = polarToXY(s.angle, s.radius * SCALE);
-    el.style.cssText = `
-      width:${size}px; height:${size}px;
-      left: calc(50% + ${pos.x}px - ${size/2}px);
-      top:  calc(50% + ${pos.y}px - ${size/2}px);
-      color: ${s.color};
-      border-color: ${s.border};
-      background: ${s.bg};
-    `;
-    el.innerHTML = `
-      <div class="sn-icon">${s.icon}</div>
-      <div class="sn-label">${s.label}</div>
-    `;
-    el.addEventListener('click', () => openPanel(s));
-    app.appendChild(el);
-    nodeEls[s.id] = el;
-
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('stroke', s.color);
-    line.setAttribute('stroke-width', '0.5');
-    line.setAttribute('stroke-dasharray', '4 7');
-    line.setAttribute('opacity', '0');
-    svgEl.appendChild(line);
-    lineEls[s.id] = line;
-  });
-}
-
-function updateLines() {
-  const r  = app.getBoundingClientRect();
-  const cx = r.width  / 2;
-  const cy = r.height / 2;
-  SECTIONS.forEach(s => {
-    const pos = polarToXY(s.angle, s.radius * SCALE);
-    const line = lineEls[s.id];
-    line.setAttribute('x1', cx);
-    line.setAttribute('y1', cy);
-    line.setAttribute('x2', cx + pos.x);
-    line.setAttribute('y2', cy + pos.y);
-  });
-}
-
-/* Recoloca y redimensiona los nodos tras un cambio de tamaño de ventana. */
-function relayoutNodes() {
-  SECTIONS.forEach(s => {
-    const el = nodeEls[s.id];
-    if (!el) return;
-    const size = s.size * SCALE;
-    const pos = polarToXY(s.angle, s.radius * SCALE);
-    el.style.width  = size + 'px';
-    el.style.height = size + 'px';
-    el.style.left = `calc(50% + ${pos.x}px - ${size/2}px)`;
-    el.style.top  = `calc(50% + ${pos.y}px - ${size/2}px)`;
-  });
-}
-
-function animateNodes() {
-  SECTIONS.forEach((s, i) => {
-    setTimeout(() => {
-      const el = nodeEls[s.id];
-      el.style.opacity = '1';
-      el.style.transform = 'scale(1)';
-      const line = lineEls[s.id];
-      setTimeout(() => {
-        line.style.transition = 'opacity .6s ease';
-        line.setAttribute('opacity', '0.35');
-      }, 200);
-    }, 500 + i * 130);
-  });
-}
-
-/* =========================================
-   FLOAT ANIMATION
-   ========================================= */
-const floatOffsets = SECTIONS.map((_, i) => ({
-  phase: i * 1.1,
-  speed: 0.55 + Math.random() * 0.3,
-  amp:   5 + Math.random() * 3,
-}));
-
-function floatNodes() {
-  const t = Date.now() / 1000;
-  SECTIONS.forEach((s, i) => {
-    const el = nodeEls[s.id];
-    if (el.style.opacity !== '1') return;
-    const f = floatOffsets[i];
-    const dy = Math.sin(t * f.speed + f.phase) * f.amp * SCALE;
-    const size = s.size * SCALE;
-    const pos = polarToXY(s.angle, s.radius * SCALE);
-    el.style.left = `calc(50% + ${pos.x}px - ${size/2}px)`;
-    el.style.top  = `calc(50% + ${pos.y + dy}px - ${size/2}px)`;
-  });
-  updateLines();
-  requestAnimationFrame(floatNodes);
-}
-
-/* =========================================
-   PANEL
-   ========================================= */
-function openPanel(s) {
-  document.getElementById('panel-title').textContent    = s.title;
-  document.getElementById('panel-subtitle').textContent = s.subtitle;
-  document.getElementById('panel-content').innerHTML    = s.content;
-  panel.classList.add('open');
-}
-document.getElementById('panel-close').addEventListener('click', () => {
-  panel.classList.remove('open');
+  /* Sección de contenido */
+  const section = document.createElement('section');
+  section.className = 'section';
+  section.id = s.id;
+  section.style.setProperty('--sc', s.color);
+  section.innerHTML = `
+    <header class="article-heading">
+      <span class="hash" aria-hidden="true">#</span>
+      <h2>${s.title}</h2>
+    </header>
+    <p class="section-sub">${s.subtitle}</p>
+    <div class="card">${s.content}</div>
+  `;
+  sectionsEl.appendChild(section);
 });
+
+/* =========================================
+   CARD GLOW — el borde luminoso sigue al ratón
+   ========================================= */
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+});
+
+/* =========================================
+   SCROLL-SPY — resalta la sección activa en el TOC
+   ========================================= */
+const tocLinks = {};
+tocEl.querySelectorAll('a').forEach(a => { tocLinks[a.dataset.target] = a; });
+
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      Object.values(tocLinks).forEach(a => a.classList.remove('active'));
+      const link = tocLinks[entry.target.id];
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+document.querySelectorAll('.section').forEach(sec => spy.observe(sec));
 
 /* =========================================
    INTRO SEQUENCE
    ========================================= */
-createNodes();
-updateLines();
-
-/* Al terminar la intro se oculta la pantalla de carga y queda a la vista el
-   hero (primera pantalla). Los nodos están más abajo, bajo la línea de
-   flotación, y se revelan al hacer scroll hasta su sección. */
 setTimeout(() => {
   document.getElementById('intro-overlay').classList.add('hidden');
-}, 2800);
-
-/* =========================================
-   SCROLL REVEAL — los nodos aparecen al entrar en viewport
-   ========================================= */
-let nodesRevealed = false;
-function revealNodes() {
-  if (nodesRevealed) return;
-  nodesRevealed = true;
-  app.classList.add('visible');
-  animateNodes();
-  setTimeout(floatNodes, 800);
-}
-
-const appObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) revealNodes();
-  });
-}, { threshold: 0.3 });
-appObserver.observe(app);
+}, 2400);

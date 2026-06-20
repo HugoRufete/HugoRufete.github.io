@@ -10,81 +10,87 @@
 </head>
 <body>
 
-<!-- Custom cursor -->
+<!-- CUSTOM CURSOR -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
-<!-- Intro loading screen -->
+<!-- INTRO LOADING SCREEN -->
 <div id="intro-overlay">
   <div class="intro-line">HUGO RUFETE</div>
   <div class="intro-line">game developer · technical artist</div>
   <div class="intro-bar"><div class="intro-bar-fill"></div></div>
 </div>
 
-<!-- Particle canvas -->
+<!-- PARTICLE CANVAS -->
 <canvas id="bg-canvas"></canvas>
 
-<!-- Site header (fijo arriba) -->
+<!-- SITE HEADER -->
 <header id="site-header">
-  <div class="brand">Hugo Rufete<span>.</span></div>
+  <a class="brand" href="#top">Hugo Rufete<span>.</span></a>
   <nav class="site-nav">
-    <a href="https://github.com/HugoRufete" target="_blank">GitHub</a>
-    <a href="https://linkedin.com/in/hugorufete" target="_blank">LinkedIn</a>
-    <a href="mailto:tu@email.com">Email</a>
+    <a href="#proyectos">Work</a>
+    <a href="#experiencia">About</a>
+  </nav>
+  <nav class="site-links">
+    <a href="https://github.com/HugoRufete" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+    <a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
   </nav>
 </header>
 
-<!-- Hero (primera pantalla, antes de los nodos) -->
-<section id="hero">
-  <!-- Vídeo de fondo del hero (autoplay silencioso en bucle) -->
-  <video class="hero-video" autoplay muted loop playsinline poster="img/ui/hero-poster.jpg">
-    <source src="video/hero.webm" type="video/webm">
-    <source src="video/hero.mp4" type="video/mp4">
-  </video>
-  <h1 class="hero-title">Hugo Rufete</h1>
-  <p class="hero-sub">Game Developer &amp; Technical Artist</p>
-  <div class="scroll-hint">scroll ↓</div>
-</section>
+<!-- MAIN -->
+<main id="top">
+  <div class="layout-split">
 
-<!-- Main app -->
-<div id="app">
-  <!-- Orbit rings -->
-  <div class="orbit-ring"></div>
-  <div class="orbit-ring"></div>
-  <div class="orbit-ring"></div>
-  <!-- Pulse rings -->
-  <div class="pulse-ring"></div>
-  <div class="pulse-ring"></div>
-  <!-- SVG connectors -->
-  <svg id="connectors"></svg>
-  <!-- Center node -->
-  <div id="center-node">
-    <div class="cn-name">Hugo<br>Rufete</div>
-    <div class="cn-role">Game Dev<br>Tech Artist</div>
+    <!-- SIDEBAR -->
+    <aside class="layout-split__sidebar">
+      <div class="sidebar-inner">
+        <div class="eyebrow">/ ˈhjuː.ɣo /</div>
+        <h1 class="identity-name">Hugo Rufete</h1>
+        <p class="identity-sub">The <b>Portfolio</b><br>of a <b>Game Developer</b></p>
+
+        <menu class="social-links" aria-label="Social links">
+          <li><a href="https://github.com/HugoRufete" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><a href="mailto:hugorufete@gmail.com" aria-label="Email">Email</a></li>
+        </menu>
+
+        <!-- Table of contents — rellenado por main.js -->
+        <menu class="toc" aria-label="Table of contents"></menu>
+
+        <div class="availability">available for projects</div>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="layout-split__content">
+      <!-- Feature: vídeo hero como banner editorial superior -->
+      <div class="feature">
+        <video class="feature-video" autoplay muted loop playsinline poster="img/ui/hero-poster.png">
+          <source src="video/hero.mp4" type="video/mp4">
+        </video>
+        <div class="feature-overlay">
+          <span class="feature-tag">game developer &amp; technical artist</span>
+        </div>
+      </div>
+
+      <!-- Secciones — rellenadas por main.js desde SECTIONS -->
+      <div id="sections"></div>
+    </div>
+
   </div>
-</div>
+</main>
 
-<!-- Side panel -->
-<div id="panel">
-  <button id="panel-close">✕</button>
-  <div class="panel-eyebrow">// section</div>
-  <h2 id="panel-title"></h2>
-  <div id="panel-subtitle"></div>
-  <div id="panel-content"></div>
-</div>
-
-<!-- HUD elements -->
-<div id="hud-name">
-  <div class="hud-title">Hugo Rufete</div>
-  <div class="hud-sub">Game Developer &amp; Technical Artist</div>
-</div>
-<div id="hud-links">
-  <a href="https://github.com/HugoRufete" target="_blank">GitHub</a>
-  <a href="mailto:tu@email.com">Email</a>
-  <a href="https://linkedin.com/in/hugorufete" target="_blank">LinkedIn</a>
-</div>
-<div id="hud-hint">// select a node to explore</div>
-<div id="hud-status">available for projects</div>
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <span class="footer-brand">Hugo Rufete<span>.</span></span>
+    <menu class="social-links" aria-label="More links">
+      <li><a href="https://github.com/HugoRufete" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:hugorufete@gmail.com">Email</a></li>
+    </menu>
+  </div>
+</footer>
 
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>

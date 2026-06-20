@@ -26,7 +26,7 @@ HugoRufete.github.io/
 │   └── style.css       ← Todos los estilos (fuente única de verdad del diseño)
 ├── js/
 │   ├── data.js         ← Contenido del portfolio (array SECTIONS: textos, colores, metadatos)
-│   └── main.js         ← Solo lógica (nodos, partículas, panel, cursor, escala)
+│   └── main.js         ← Solo lógica (render de TOC + secciones, partículas, cursor, scroll-spy)
 ├── img/
 │   ├── README.md       ← Guía de cómo añadir/referenciar imágenes
 │   ├── ui/             ← Iconos, logos, fondos de la interfaz general
@@ -78,12 +78,16 @@ Cada sección del portfolio tiene su color fijo. No los cambies:
 - No usar Arial, Roboto, Inter ni fuentes del sistema
 
 ### Estética general
+Estilo editorial inspirado en `fydar.dev`, adaptado a la paleta de Hugo.
 - Tema oscuro siempre (no hay modo claro)
-- Partículas de fondo animadas en canvas
-- Nodos circulares flotantes con conectores SVG
-- Panel lateral deslizante para contenido de cada sección
+- Partículas de fondo animadas en canvas (muy tenues)
+- Layout de dos columnas: **sidebar sticky** (identidad + índice TOC) + **columna de contenido** con secciones
+- Cada sección lleva un encabezado con `#` teñido del color de la sección (`--sc`)
+- Tarjetas con **borde luminoso (glow) que sigue al ratón**, al color de cada sección
+- Índice lateral con **scroll-spy**: resalta la sección activa al hacer scroll
 - Cursor personalizado con anillo de seguimiento suave
 - Pantalla de carga (intro overlay) antes de mostrar la web
+- Vídeo hero reutilizado como *feature banner* en la parte alta del contenido
 
 ---
 
@@ -91,19 +95,22 @@ Cada sección del portfolio tiene su color fijo. No los cambies:
 
 ### HTML
 - Usa comentarios de sección en mayúsculas: `<!-- NOMBRE SECCIÓN -->`
-- IDs en kebab-case: `panel-close`, `hud-name`, `bg-canvas`
-- Clases BEM simplificado: `section-node`, `sn-icon`, `sn-label`
+- IDs en kebab-case: `site-header`, `bg-canvas`, `sections`
+- Clases BEM simplificado: `layout-split`, `layout-split__sidebar`, `layout-split__content`, `article-heading`
+- **No usar el estilo `// texto` como adorno en el contenido visible** (Hugo no lo quiere); si hace falta un rótulo, deja el texto sin las barras
 
 ### CSS
 - Variables CSS en `:root` para todos los colores y fuentes
+- El acento de cada sección se inyecta con la variable `--sc` en el `<section>` (lo pone `main.js`)
 - Propiedades en orden: position → display → size → spacing → visual → animation
-- Animaciones con `@keyframes` nombradas en camelCase: `fadeUp`, `pulseRing`, `barFill`
-- No usar `!important` salvo para overrides de hover en nodos
+- Animaciones con `@keyframes` nombradas en camelCase: `fadeUp`, `barFill`, `blink`
+- No usar `!important`
 
 ### JavaScript
 - Constantes en SCREAMING_SNAKE_CASE: `SECTIONS`
-- Variables de DOM en camelCase: `nodeEls`, `lineEls`, `svgEl`
-- Funciones nombradas con verbo: `createNodes()`, `animateNodes()`, `openPanel()`
+- Variables de DOM en camelCase: `tocEl`, `sectionsEl`, `tocLinks`
+- Funciones nombradas con verbo: `initParticles()`, `drawParticles()`, `animateCursor()`
+- La web se construye desde `SECTIONS`: `main.js` genera el TOC del sidebar y las secciones del contenido, y conecta el scroll-spy (`IntersectionObserver`)
 - Separar en bloques comentados con `/= NOMBRE =/`
 - No usar jQuery, no usar librerías externas salvo Google Fonts
 
@@ -111,27 +118,20 @@ Cada sección del portfolio tiene su color fijo. No los cambies:
 
 ## Responsive — adaptación a móviles y resoluciones
 
-La web **debe verse bien en cualquier dispositivo** (móvil, tablet, desktop). Todo el responsive es **nativo**: media queries de CSS + un factor de escala en JS. **No se usan librerías** (Bootstrap, Tailwind, etc.) — no aplican a un layout de nodos posicionados por coordenadas y romperían la regla de "vanilla puro".
+La web **debe verse bien en cualquier dispositivo** (móvil, tablet, desktop). Todo el responsive es **nativo**: media queries de CSS sobre un layout de CSS Grid. **No se usan librerías** (Bootstrap, Tailwind, etc.) — romperían la regla de "vanilla puro".
 
-### Principio: el diseño se ESCALA, no cambia de layout
-En todos los tamaños se mantiene la misma constelación de nodos; en pantallas pequeñas se reduce proporcionalmente. No hay un layout alternativo (lista/menú) en móvil. Si algún día se quiere eso, Hugo debe pedirlo explícitamente.
-
-### Cómo funciona el escalado (en `js/main.js`)
-- Existe un factor global `SCALE` calculado en `computeScale()`: `Math.min(1, minDim / 620)`, donde `minDim` es la dimensión más pequeña de la ventana.
-- **En desktop `SCALE` vale 1 → la web se ve idéntica al diseño original.** Nunca rompas esto: cualquier cambio en los nodos debe seguir multiplicando `s.radius` y `s.size` por `SCALE`.
-- El radio, el tamaño de los nodos y la amplitud de flotación se multiplican por `SCALE` en `createNodes()`, `updateLines()`, `floatNodes()` y `relayoutNodes()`.
-- Al redimensionar la ventana se recalcula (`resize` → `computeScale()` + `relayoutNodes()` + `updateLines()`).
+### Principio: el layout COLAPSA de 2 columnas a 1
+En desktop hay dos columnas (`grid-template-columns: minmax(220px, 290px) 1fr`): sidebar sticky + contenido. En pantallas pequeñas el grid pasa a **una sola columna**: el sidebar deja de ser sticky y se apila encima del contenido. Las tipografías usan `clamp()` para escalar de forma fluida.
 
 ### Breakpoints CSS (en `css/style.css`, al final del archivo)
-- **`≤ 768px`** (tablet/móvil grande): panel = `min(420px, 90vw)`, HUD pegado a los bordes, se oculta `#hud-hint`, nodo central y etiquetas más pequeños.
-- **`≤ 480px`** (móvil estrecho): panel a pantalla completa (`100vw`).
+- **`≤ 860px`** (tablet/móvil grande): `.layout-split` pasa a 1 columna, el sidebar deja de ser `sticky` y se coloca arriba; se oculta el `nav` central del header; el feature pasa a `16/9`.
+- **`≤ 480px`** (móvil estrecho): menos padding en `main` y en las `.card`, menos separación entre secciones.
 - **`(hover: none), (pointer: coarse)`** (táctil): se oculta el cursor personalizado (`#cursor`, `#cursor-ring`) y se restaura el cursor del sistema.
 
 ### Reglas al desarrollar cualquier cosa nueva
 - **Siempre** dejar el `<meta name="viewport" content="width=device-width, initial-scale=1.0">` en el `<head>` (ya está en `index.html`).
-- Para tamaños de layout que deben adaptarse, usar unidades relativas: `clamp()`, `min()`, `max()`, `vw`, `vh` — no hardcodear `px` fijos en anchos de contenedores.
-- Todo efecto `:hover` necesita tener sentido sin ratón o un fallback para táctil (en móvil no hay hover).
-- Cualquier elemento nuevo posicionado con JS por coordenadas debe multiplicar sus medidas por `SCALE`.
+- Para tamaños de layout que deben adaptarse, usar unidades relativas: `clamp()`, `min()`, `max()`, `vw`, `vh` — no hardcodear anchos fijos en `px` en contenedores.
+- Todo efecto `:hover` (incluido el glow de las tarjetas) necesita tener sentido sin ratón o un fallback para táctil (en móvil no hay hover).
 - **Probar siempre en móvil antes de subir**: DevTools (F12) → `Ctrl+Shift+M` (device toolbar) → comprobar al menos iPhone SE (375px), iPad (768px) y desktop.
 
 ---
@@ -141,7 +141,7 @@ En todos los tamaños se mantiene la misma constelación de nodos; en pantallas 
 1. Crea la carpeta `proyectos/nombre-del-proyecto/`
 2. Dentro crea `index.html` con la plantilla de página de proyecto
 3. Añade imágenes en `img/proyectos/nombre-del-proyecto/`
-4. En `js/data.js`, actualiza el contenido HTML del panel correspondiente en el array `SECTIONS` (un blurb corto + enlace a la página del proyecto). El detalle largo va en el `index.html` del proyecto.
+4. En `js/data.js`, actualiza la propiedad `content` de la sección correspondiente en el array `SECTIONS` (un blurb corto + enlace a la página del proyecto). El detalle largo va en el `index.html` del proyecto.
 
 ### Plantilla mínima de página de proyecto
 ```html
@@ -174,7 +174,7 @@ Para cambiar el texto de una sección del portfolio, busca en `js/data.js` el ar
   id: 'experiencia',
   // ...
   content: `
-    <h4>// experiencia</h4>
+    <h4>experiencia</h4>
     <p>→ Empresa X — Rol — 2023/2024</p>
     <p>→ Empresa Y — Rol — 2022/2023</p>
   `
@@ -219,17 +219,14 @@ GitHub Pages tarda entre 30 segundos y 2 minutos en reflejar los cambios.
 - No añadir frameworks (React, Vue, etc.) sin que Hugo lo decida explícitamente
 - No usar `alert()`, `console.log()` en producción
 - No hardcodear URLs absolutas excepto las de GitHub y LinkedIn de Hugo
-- No romper el responsive: en desktop `SCALE` debe seguir valiendo 1, y todo nodo posicionado por JS debe multiplicar sus medidas por `SCALE`
-- No añadir librerías de responsive (Bootstrap, Tailwind, etc.) — el responsive es nativo (media queries + escala JS)
+- No usar el estilo `// texto` como adorno en el contenido visible de la web
+- No añadir librerías de responsive (Bootstrap, Tailwind, etc.) — el responsive es nativo (media queries + CSS Grid que colapsa)
 
 ---
 
 ## Contacto y redes (datos reales a actualizar)
 
-Cuando Hugo proporcione sus datos reales, actualizar en `index.html`:
-- Email: buscar `tu@email.com` y reemplazar
-- LinkedIn: buscar `linkedin.com/in/hugorufete` y reemplazar con URL real
-- Cualquier otra red social que quiera añadir al HUD inferior
+Datos ya integrados (email `hugorufete@gmail.com`, GitHub `HugoRufete`, LinkedIn `hugorufete`). Aparecen en el header, el sidebar y el footer de `index.html`. Para añadir otra red social, replica un `<li>` dentro de los `<menu class="social-links">`.
 
 ---
 

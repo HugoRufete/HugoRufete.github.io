@@ -77,7 +77,7 @@ const SECTIONS = [
     subtitle: 'Rendering · Shaders · Optimization',
     content: `
       <p>Dynamic lighting systems designed for real performance across multiple platforms, balancing visual quality and computational cost.</p>
-      <h4>// pipelines</h4>
+      <h4>pipelines</h4>
       <div>
         <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">URP</span>
         <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">HDRP</span>
@@ -85,7 +85,7 @@ const SECTIONS = [
         <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">Shader Graph</span>
         <span class="tag" style="color:#f59e0b;border-color:rgba(245,158,11,0.3)">GI</span>
       </div>
-      <h4>// specialties</h4>
+      <h4>specialties</h4>
       <p>→ Baked and real-time Global Illumination<br>→ Custom shaders for special effects<br>→ Culling, LOD and batching techniques<br>→ Post-processing and color grading</p>
     `
   },
@@ -103,20 +103,20 @@ const SECTIONS = [
     subtitle: 'Tools · Languages · Workflow',
     content: `
       <p>A set of technologies and tools used across professional and personal game development projects.</p>
-      <h4>// engine & languages</h4>
+      <h4>engine & languages</h4>
       <div>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Unity</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">C#</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">HLSL</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Python</span>
       </div>
-      <h4>// art & 3D</h4>
+      <h4>art & 3D</h4>
       <div>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Blender</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Substance Painter</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Shader Graph</span>
       </div>
-      <h4>// workflow</h4>
+      <h4>workflow</h4>
       <div>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Git</span>
         <span class="tag" style="color:#34d399;border-color:rgba(52,211,153,0.3)">Plastic SCM</span>
@@ -139,11 +139,11 @@ const SECTIONS = [
     subtitle: 'Concept · Prototyping · Art',
     content: `
       <p>Methodology and creative process from ideation to the realization of game concepts, integrating technical and artistic design.</p>
-      <h4>// process</h4>
+      <h4>process</h4>
       <p>→ Mechanics ideation and sketching<br>→ Rapid prototyping in Unity<br>→ GDD documentation<br>→ Playtesting and iteration</p>
-      <h4>// concept design</h4>
+      <h4>concept design</h4>
       <p>→ Scenes and environments<br>→ Character concept art<br>→ UI/UX for games<br>→ Visual narrative and mood boards</p>
-      <h4>// coming soon</h4>
+      <h4>coming soon</h4>
       <p style="color:#546e8a">Gallery of concepts, sketches and creation processes.</p>
     `
   },
@@ -161,13 +161,13 @@ const SECTIONS = [
     subtitle: 'Career · Education',
     content: `
       <p>Professional career and education in game development and technical programming.</p>
-      <h4>// professional experience</h4>
+      <h4>professional experience</h4>
       <p style="color:#546e8a">Add your positions, companies and professional projects here.</p>
-      <h4>// education</h4>
+      <h4>education</h4>
       <p style="color:#546e8a">Add your academic background and relevant courses here.</p>
-      <h4>// contact</h4>
-      <a class="panel-link" href="mailto:tu@email.com">
-        <span class="link-icon">✉</span> tu@email.com
+      <h4>contact</h4>
+      <a class="panel-link" href="mailto:hugorufete@gmail.com">
+        <span class="link-icon">✉</span> hugorufete@gmail.com
       </a>
       <a class="panel-link" href="https://github.com/HugoRufete" target="_blank">
         <span class="link-icon">⌥</span> github.com/HugoRufete
