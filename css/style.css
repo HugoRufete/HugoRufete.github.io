@@ -11,6 +11,7 @@
   --text:      #A4292E;                 /* todo el texto en pantone */
   --muted:     #A4292E;                 /* sin gris: el secundario también es pantone (jerarquía por tamaño/peso) */
   --muted2:    rgba(164,41,46,0.28);    /* bordes y separadores: rojo tenue */
+  --accent-light: #e35a5f;              /* rojo claro para elementos SELECCIONADOS (clarear + glow box) */
   --font-head: 'Syne', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -269,10 +270,15 @@ main {
 }
 .toc a:hover { color: var(--text); }
 .toc a.active {
-  color: var(--sc-item, var(--accent));
-  padding-left: 28px;
+  color: var(--accent-light);
+  width: fit-content;
+  padding: 7px 14px;
+  background: color-mix(in srgb, var(--accent-light) 16%, transparent);
+  border-radius: 8px;
+  text-shadow: 0 0 10px rgba(227,90,95,0.55);
+  box-shadow: 0 0 22px rgba(227,90,95,0.35), inset 0 0 12px rgba(227,90,95,0.18);
 }
-.toc a.active::before { width: 18px; background: var(--sc-item, var(--accent)); }
+.toc a.active::before { opacity: 0; }
 
 /* =========================================
    CONTENT COLUMN
