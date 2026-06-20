@@ -6,7 +6,7 @@
 
    Para editar el contenido de una sección, modifica su propiedad `content`
    (acepta HTML inline). Para añadir una sección nueva, añade un objeto al
-   array respetando el color asignado en CLAUDE.md.
+   array respetando la paleta de color del proyecto.
 
    El contenido LARGO de cada proyecto concreto va en su propia página:
    proyectos/nombre-proyecto/index.html  (no aquí).
@@ -37,7 +37,7 @@ const SECTIONS = [
         <span class="tag">ECS</span>
       </div>
       <p>→ Gameplay mechanics development<br>→ Combat and physics systems<br>→ Procedural content generation<br>→ Performance optimization (LOD, GPU Instancing, Culling)</p>
-      <p style="color:#546e8a">Projects will be added here with screenshots, videos and detailed technical descriptions.</p>
+      <p>Projects will be added here with screenshots, videos and detailed technical descriptions.</p>
     `
   },
   {
@@ -144,7 +144,7 @@ const SECTIONS = [
       <h4>concept design</h4>
       <p>→ Scenes and environments<br>→ Character concept art<br>→ UI/UX for games<br>→ Visual narrative and mood boards</p>
       <h4>coming soon</h4>
-      <p style="color:#546e8a">Gallery of concepts, sketches and creation processes.</p>
+      <p>Gallery of concepts, sketches and creation processes.</p>
     `
   },
   {
@@ -162,9 +162,9 @@ const SECTIONS = [
     content: `
       <p>Professional career and education in game development and technical programming.</p>
       <h4>professional experience</h4>
-      <p style="color:#546e8a">Add your positions, companies and professional projects here.</p>
+      <p>Add your positions, companies and professional projects here.</p>
       <h4>education</h4>
-      <p style="color:#546e8a">Add your academic background and relevant courses here.</p>
+      <p>Add your academic background and relevant courses here.</p>
       <h4>contact</h4>
       <a class="panel-link" href="mailto:hugorufete@gmail.com">
         <span class="link-icon">✉</span> hugorufete@gmail.com

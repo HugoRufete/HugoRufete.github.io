@@ -8,11 +8,14 @@
   --surface:   #0d1220;
   --surface2:  #111827;
   --accent:    #A4292E;
-  --text:      #e8eaf6;
-  --muted:     #546e8a;
-  --muted2:    #334155;
+  --text:      #A4292E;                 /* todo el texto en pantone */
+  --muted:     #A4292E;                 /* sin gris: el secundario también es pantone (jerarquía por tamaño/peso) */
+  --muted2:    rgba(164,41,46,0.28);    /* bordes y separadores: rojo tenue */
   --font-head: 'Syne', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* Glow base para "iluminar" el texto sobre el negro */
+  --text-glow: 0 0 8px rgba(164,41,46,0.45);
 
   /* Acento por sección — lo sobreescribe cada <section> vía --sc */
   --sc: var(--accent);
@@ -29,6 +32,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-head);
+  text-shadow: var(--text-glow);
   cursor: default;
 }
 
@@ -200,6 +204,7 @@ main {
   text-transform: uppercase;
   margin-bottom: 18px;
   color: var(--accent);
+  text-shadow: 0 0 4px rgba(164,41,46,0.7), 0 0 24px rgba(164,41,46,0.45);
 }
 .identity-sub {
   font-family: var(--font-head);
@@ -269,26 +274,6 @@ main {
 }
 .toc a.active::before { width: 18px; background: var(--sc-item, var(--accent)); }
 
-.availability {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 28px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.availability::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: #22c55e;
-  animation: blink 2s ease-in-out infinite;
-}
-@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
-
 /* =========================================
    CONTENT COLUMN
    ========================================= */
@@ -341,6 +326,7 @@ main {
   color: var(--sc);
   line-height: 1;
   opacity: .7;
+  text-shadow: 0 0 10px rgba(164,41,46,0.55);
 }
 .article-heading h2 {
   font-family: var(--font-head);
@@ -348,6 +334,7 @@ main {
   font-size: clamp(24px, 4vw, 34px);
   letter-spacing: -.5px;
   line-height: 1;
+  text-shadow: 0 0 3px rgba(164,41,46,0.7), 0 0 16px rgba(164,41,46,0.4);
 }
 .section-sub {
   font-family: var(--font-mono);
@@ -389,7 +376,7 @@ main {
 .card:hover::before { opacity: .9; }
 
 /* Contenido interno de las secciones (viene de data.js) */
-.card p { font-size: 14px; color: #9fb0c8; line-height: 1.85; margin-bottom: 12px; }
+.card p { font-size: 14px; color: var(--text); line-height: 1.85; margin-bottom: 12px; }
 .card p:last-child { margin-bottom: 0; }
 .card b, .card strong { color: var(--sc); font-weight: 700; }
 .card h4 {

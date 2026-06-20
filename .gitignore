@@ -1,0 +1,7 @@
+# Notas internas de trabajo — no publicar
+CLAUDE.md
+
+# Artefactos de Node (la web es estática, no debería haberlos)
+node_modules/
+package.json
+package-lock.json
