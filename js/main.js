@@ -115,19 +115,26 @@ document.querySelectorAll('.card').forEach(card => {
 });
 
 /* =========================================
-   SCROLL-SPY — resalta la sección activa en el TOC
+   SCROLL-SPY — resalta la sección activa en el TOC.
+   Si no hay ninguna sección dentro de la franja de detección (p. ej. arriba
+   del todo, en la portada), no se marca ningún apartado.
    ========================================= */
 const tocLinks = {};
 tocEl.querySelectorAll('a').forEach(a => { tocLinks[a.dataset.target] = a; });
 
+const visibleSections = new Set();
 const spy = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      Object.values(tocLinks).forEach(a => a.classList.remove('active'));
-      const link = tocLinks[entry.target.id];
-      if (link) link.classList.add('active');
-    }
+    if (entry.isIntersecting) visibleSections.add(entry.target.id);
+    else visibleSections.delete(entry.target.id);
   });
+  /* El activo es la primera sección (en orden del documento) dentro de la franja;
+     si el set está vacío, no se selecciona nada. */
+  let activeId = null;
+  for (const s of SECTIONS) {
+    if (visibleSections.has(s.id)) { activeId = s.id; break; }
+  }
+  Object.values(tocLinks).forEach(a => a.classList.toggle('active', a.dataset.target === activeId));
 }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
 
 document.querySelectorAll('.section').forEach(sec => spy.observe(sec));

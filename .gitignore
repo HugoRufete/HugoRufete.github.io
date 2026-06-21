@@ -9,3 +9,10 @@ package-lock.json
 # Volcados HTML de la web antigua de Wix — solo referencia local para traspasar texto, no publicar
 wix-web-pages_text/
 copia-de-projects
+
+# Imágenes de referencia/inspiración (capturas que adjunta Hugo) — solo local, no publicar
+Image-References/
+
+# Archivos temporales de verificación en navegador (Claude) — nunca al repo
+_verify*.mjs
+_shot-*.png
