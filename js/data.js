@@ -16,11 +16,12 @@ const SECTIONS = [
     title: 'Experience',
     subtitle: 'Career · Education',
     content: `
-      <p>Professional career and education in game development and technical programming.</p>
       <h4>professional experience</h4>
-      <p>Add your positions, companies and professional projects here.</p>
-      <h4>education</h4>
-      <p>Add your academic background and relevant courses here.</p>
+      <p> <strong>Valentia Studio</strong> - Multiplayer Programmer & Gameplay Designer (July 2025 - Now)</p>
+      <p> <strong>FlyKube</strong> - Technical Designer & Team Lead (March 2026 - May 2026)</p>
+      <p> <strong>Nunsys</strong> - Internship - Unity Developer & XR/VR Developer (February 2025 - May 2025)</p>
+      <p> <strong>Nunsys</strong> - Internship - Unity Developer & XR/VR Developer (July 2024 - May 2025)</p>
+
       <h4>contact</h4>
       <a class="panel-link" href="mailto:hugorufete@gmail.com">
         <span class="link-icon">✉</span> hugorufete@gmail.com
