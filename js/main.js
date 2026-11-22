@@ -13,10 +13,7 @@ function renderWorkGrid() {
   return `
     <div class="work-grid">
       ${PROJECTS.map((project, i) => `
-        <a class="work-card"
-           href="${project.media}"
-           target="_blank"
-           rel="noopener noreferrer">
+        <a class="work-card" href="${project.url}">
           <div class="work-card__media">
             <img src="${project.image}" alt="${project.title} preview" width="960" height="540" loading="lazy">
             ${project.type === 'video'
@@ -31,7 +28,7 @@ function renderWorkGrid() {
             <span class="work-card__kind">${project.kind}</span>
             <h3 class="work-card__title">${project.title}</h3>
             <span class="work-card__description">${project.description}</span>
-            <span class="work-card__action" aria-hidden="true">View ${project.type === 'video' ? 'Video' : 'Image'} <span>↗</span></span>
+            <span class="work-card__action" aria-hidden="true">View Project <span>→</span></span>
           </div>
         </a>
       `).join('')}

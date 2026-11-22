@@ -1,47 +1,35 @@
-# Carpeta de imágenes — `img/`
+# Imágenes — `img/` (legado)
 
-Aquí van todas las imágenes **estáticas** de la web (capturas, thumbnails, covers, logos, iconos).
+La fuente activa de multimedia es **`projects/<slug>/media/`**. Las imágenes que antes vivían en `img/proyectos/` ya están copiadas en la carpeta de cada proyecto. Este directorio se conserva solo hasta que Hugo verifique la migración y decida borrarlo.
 
-> **Media animado** (vídeos, loops/clips de gameplay) **NO va aquí**: va en `video/` (ver `video/README.md`). Para gameplay usa vídeo en bucle, no `.gif` (un GIF pesa 10-50× más). Reserva el `.gif` para cosas diminutas; si necesitas un icono animado ligero, usa **`.webp` animado**.
-
-## Estructura
+## Dónde poner las imágenes ahora
 
 ```
-img/
-├── ui/                 ← iconos, logos, fondos de la interfaz general
-└── proyectos/
-    └── nombre-proyecto/   ← capturas y media de cada proyecto
-        ├── cover.jpg
-        ├── screenshot-01.jpg
-        └── ...
+projects/<slug>/
+  index.html
+  content.md
+  media/
+    poster.webp
+    captura-01.webp
+    ...
 ```
 
-## Cómo referenciar una imagen
+Desde una página de proyecto se referencian de forma relativa:
 
-Las rutas son **relativas** al archivo HTML que la usa.
-
-### Desde `index.html` (raíz del proyecto)
 ```html
-<img src="img/ui/logo.png" alt="Logo">
-<img src="img/proyectos/mi-juego/cover.jpg" alt="Portada">
+<img src="media/captura-01.webp" alt="Captura del proyecto" loading="lazy">
 ```
 
-O dentro del array `SECTIONS` en `js/main.js` (el contenido acepta HTML):
-```javascript
-content: `
-  <img src="img/proyectos/mi-juego/cover.jpg" alt="Mi Juego" style="width:100%;border-radius:8px">
-`
-```
+Desde la homepage (`index.html`):
 
-### Desde una página de proyecto (`proyectos/nombre/index.html`)
-Hay que subir dos niveles con `../../`:
 ```html
-<img src="../../img/proyectos/mi-juego/cover.jpg" alt="Portada">
+<img src="projects/601-street/media/poster.webp" alt="601 Street" loading="lazy">
 ```
 
 ## Recomendaciones
 
-- **Formato**: `.webp` o `.jpg` para fotos/capturas, `.png` para logos con transparencia, `.svg` para iconos, `.webp` animado para micro-loops tipo icono. Para clips de gameplay usa vídeo en `video/`, no `.gif`.
-- **Peso**: comprime las imágenes antes de subirlas (ideal < 300 KB por captura). GitHub Pages sirve archivos estáticos, así que el peso afecta directamente a la velocidad de carga.
-- **Nombres**: en minúsculas y kebab-case, sin espacios ni acentos: `captura-nivel-01.jpg`, no `Captura Nivel 01.JPG`.
-- **`alt`**: pon siempre texto alternativo descriptivo (accesibilidad y SEO).
+- **Formato**: `.webp` o `.jpg` para capturas, `.png` para logos con transparencia, `.webp` animado para micro-loops tipo icono.
+- **Peso**: comprimir antes de subir (ideal < 300 KB por captura). GitHub Pages sirve archivos estáticos y el peso afecta directamente a la carga.
+- **Nombres**: minúsculas y kebab-case, sin espacios ni acentos: `captura-nivel-01.webp`.
+- **`alt`**: texto alternativo descriptivo siempre.
+- **Vídeo**: no usar `.gif` para clips de gameplay; usar MP4 en la misma carpeta `media/`. Ver `video/README.md`.

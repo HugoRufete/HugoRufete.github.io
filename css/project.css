@@ -1,0 +1,207 @@
+/* =========================================
+   PROJECT PAGES
+   Extends css/style.css. Same tokens, no new accents.
+   ========================================= */
+
+.project-shell {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 56px) 32px 0;
+}
+
+.project-back-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+.back-link span:first-child { font-size: 16px; line-height: 1; }
+.back-link:hover {
+  color: var(--text);
+  text-shadow: var(--white-glow);
+}
+
+.project-counter {
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Hero ---------- */
+.project-hero {
+  display: grid;
+  grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+  gap: 60px;
+  align-items: center;
+  padding: 56px 0 76px;
+  border-bottom: 1px solid var(--line);
+}
+
+.project-hero h1 {
+  margin: 16px 0 20px;
+  font-size: clamp(40px, 6vw, 70px);
+  letter-spacing: -0.05em;
+  line-height: 1.04;
+}
+
+.project-lede {
+  max-width: 44ch;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-soft);
+}
+
+.project-facts {
+  margin-top: 34px;
+  border-top: 1px solid var(--line);
+}
+.project-facts div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.project-facts dt {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.project-facts dd {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.project-hero__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+}
+.project-hero__media video,
+.project-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.04) brightness(.9);
+}
+
+/* ---------- Sections ---------- */
+.project-section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--line);
+}
+.project-section__heading {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+.project-section__heading span {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  padding-top: 5px;
+}
+.project-section__heading h2 {
+  font-size: clamp(24px, 2.8vw, 32px);
+  letter-spacing: -0.035em;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.media-item {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.media-item video,
+.media-item img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #050506;
+  filter: contrast(1.03) brightness(.9);
+}
+.media-item figcaption {
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.media-item:hover {
+  border-color: rgba(255, 255, 255, .38);
+  box-shadow: 0 0 22px rgba(255, 255, 255, .06);
+}
+
+.project-section .panel:hover {
+  border-color: rgba(255, 255, 255, .3);
+}
+
+/* ---------- Next project ---------- */
+.project-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 48px 0 80px;
+}
+.project-next__label {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.project-next__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(20px, 3vw, 30px);
+  letter-spacing: -0.03em;
+}
+.project-next__link:hover {
+  text-shadow: var(--white-glow);
+}
+.project-next__link span:last-child { font-size: 18px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .project-hero {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 40px 0 56px;
+  }
+  .project-hero__media { max-width: 720px; }
+}
+
+@media (max-width: 760px) {
+  .project-shell { padding: calc(var(--header-h) + 34px) 20px 0; }
+  .site-nav { display: none; }
+  .project-section { padding: 48px 0; }
+  .project-facts div { grid-template-columns: 100px 1fr; }
+}
+
+@media (max-width: 560px) {
+  .media-grid { grid-template-columns: 1fr; }
+  .project-next { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+

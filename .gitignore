@@ -16,3 +16,8 @@ Image-References/
 # Archivos temporales de verificación en navegador (Claude) — nunca al repo
 _verify*.mjs
 _shot-*.png
+
+# CV original con datos personales y artefactos temporales de OCR
+cv-references/
+eng.traineddata
+spa.traineddata
