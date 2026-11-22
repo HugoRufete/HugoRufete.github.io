@@ -1,132 +1,207 @@
 /* =========================================
-   SECTION DATA — contenido del portfolio
+   PORTFOLIO DATA
    =========================================
-   Solo datos (textos, color y metadatos) de cada apartado.
-   La lógica de render (TOC + secciones + scroll-spy) vive en js/main.js.
-
-   Para editar un apartado, modifica su propiedad `content` (acepta HTML inline).
-   Para añadir uno nuevo, agrega un objeto con: id, label, color, title, subtitle, content.
-   El contenido LARGO de cada proyecto va en su propia página: proyectos/<nombre>/index.html
+   Single source of truth for the work grid and the page sections.
+   js/main.js turns this into the index, the work cards and the sections.
+   Media lives in img/ and video/. Keep descriptions short and factual.
    ========================================= */
+
+const PROJECTS = [
+  {
+    title: 'Showreel',
+    kind: 'Reel',
+    description: 'A short cut of recent gameplay, systems and prototypes.',
+    image: 'img/ui/hero-poster.webp',
+    media: 'video/hero.mp4',
+    type: 'video'
+  },
+  {
+    title: '601 Street',
+    kind: 'Narrative systems',
+    description: 'Dialogue, inventory and dice systems for a choice-driven game.',
+    image: 'img/proyectos/601-street/poster.webp',
+    media: 'video/proyectos/601-street/dialogue-example.mp4',
+    type: 'video'
+  },
+  {
+    title: 'Load-In',
+    kind: 'Gameplay prototype',
+    description: 'Exploration, melee combat and environmental storytelling in Unity.',
+    image: 'img/proyectos/load-in/portada.webp',
+    media: 'video/proyectos/load-in/gameplay.mp4',
+    type: 'video'
+  },
+  {
+    title: 'Proyecto III',
+    kind: 'Visual development',
+    description: 'Poster and in-game art exploration for a studio project.',
+    image: 'img/proyectos/proyecto-iii/poster.webp',
+    media: 'img/proyectos/proyecto-iii/poster.webp',
+    type: 'image'
+  },
+  {
+    title: 'Face Tracking',
+    kind: 'Technical prototype',
+    description: 'Real-time facial tracking driving reactive character behaviour.',
+    image: 'img/proyectos/face-tracking-technical-prototyping/poster.webp',
+    media: 'video/proyectos/face-tracking-technical-prototyping/prototype-video.mp4',
+    type: 'video'
+  },
+  {
+    title: 'Space Invaders',
+    kind: 'Multiplayer',
+    description: 'A networked arcade shooter prototype built in Unity.',
+    image: 'img/proyectos/space-invaders-multiplayer/poster.webp',
+    media: 'video/proyectos/space-invaders-multiplayer/space-invaders-gameplay.mp4',
+    type: 'video'
+  },
+  {
+    title: 'Mixed Reality',
+    kind: 'XR prototype',
+    description: 'Hands-on sorting interaction for mixed reality headsets.',
+    image: 'img/proyectos/xr-mixed-reality/poster.webp',
+    media: 'video/proyectos/xr-mixed-reality/sort-video.mp4',
+    type: 'video'
+  }
+];
+
 const SECTIONS = [
+  {
+    id: 'work',
+    label: 'Work',
+    title: 'Selected work',
+    subtitle: 'Games · prototypes · technical work',
+    layout: 'work'
+  },
   {
     id: 'experience',
     label: 'Experience',
-    color: '#A4292E',
     title: 'Experience',
-    subtitle: 'Career · Education',
+    subtitle: 'Roles & teams',
     content: `
-      <h4>professional experience</h4>
-      <p> <strong>Valentia Studio</strong> - Multiplayer Programmer & Gameplay Designer (July 2025 - Now)</p>
-      <p> <strong>FlyKube</strong> - Technical Designer & Team Lead (March 2026 - May 2026)</p>
-      <p> <strong>Nunsys</strong> - Internship - Unity Developer & XR/VR Developer (February 2025 - May 2025)</p>
-      <p> <strong>Nunsys</strong> - Internship - Unity Developer & XR/VR Developer (July 2024 - May 2025)</p>
-
-      <h4>contact</h4>
-      <a class="panel-link" href="mailto:hugorufete@gmail.com">
-        <span class="link-icon">✉</span> hugorufete@gmail.com
-      </a>
-      <a class="panel-link" href="https://github.com/HugoRufete" target="_blank">
-        <span class="link-icon">⌥</span> github.com/HugoRufete
-      </a>
-      <a class="panel-link" href="https://linkedin.com/in/hugorufete" target="_blank">
-        <span class="link-icon">◈</span> linkedin.com/in/hugorufete
-      </a>
-    `
-  },
-  {
-    id: 'games',
-    label: 'Games',
-    color: '#A4292E',
-    title: 'Games',
-    subtitle: 'Shipped Titles · Game Projects',
-    content: `
-      <p>Games and playable projects I have worked on, from commercial titles to personal prototypes.</p>
-      <div>
-        <span class="tag">Unity</span>
-        <span class="tag">Gameplay</span>
-        <span class="tag">Prototyping</span>
-      </div>
-      <p>→ Game mechanics and combat systems<br>→ Prototyping and game jams<br>→ Released and in-development titles</p>
-      <p>Projects will be added here with screenshots, videos and links.</p>
+      <h4>Professional experience</h4>
+      <ul class="timeline">
+        <li>
+          <span class="timeline-role">Valentia Studio</span>
+          <span class="timeline-meta">Multiplayer Programmer &amp; Gameplay Designer <em>Jul 2025 to Now</em></span>
+        </li>
+        <li>
+          <span class="timeline-role">FlyKube</span>
+          <span class="timeline-meta">Technical Designer &amp; Team Lead <em>Mar 2026 to May 2026</em></span>
+        </li>
+        <li>
+          <span class="timeline-role">Nunsys</span>
+          <span class="timeline-meta">Unity Developer &amp; XR/VR Developer <em>Jul 2024 to May 2025</em></span>
+        </li>
+      </ul>
     `
   },
   {
     id: 'systems',
     label: 'Systems',
-    color: '#A4292E',
     title: 'Systems',
-    subtitle: 'Gameplay · Engine · Architecture',
+    subtitle: 'Gameplay · architecture · performance',
     content: `
-      <p>Reusable gameplay and engine systems built for performance and flexibility.</p>
-      <div>
+      <p>I build reusable gameplay and engine systems that keep up as a project grows.</p>
+      <div class="tags">
         <span class="tag">C#</span>
         <span class="tag">ECS</span>
         <span class="tag">Physics</span>
         <span class="tag">AI / NavMesh</span>
       </div>
-      <p>→ Data-driven gameplay frameworks<br>→ Inventory, abilities and stats systems<br>→ Performance optimization (LOD, GPU Instancing, Culling)</p>
+      <h4>Systems I build</h4>
+      <ul class="detail-list">
+        <li>Data-driven gameplay frameworks</li>
+        <li>Inventory, abilities and stats</li>
+        <li>LOD, GPU instancing and culling for stable frame times</li>
+      </ul>
     `
   },
   {
     id: 'lighting',
     label: 'Lighting',
-    color: '#A4292E',
-    title: 'Lighting',
-    subtitle: 'Rendering · Shaders · Optimization',
+    title: 'Lighting & rendering',
+    subtitle: 'Pipelines · shaders · optimisation',
     content: `
-      <p>Dynamic lighting systems designed for real performance across multiple platforms, balancing visual quality and computational cost.</p>
-      <h4>pipelines</h4>
-      <div>
+      <p>I design dynamic lighting that holds visual quality without wasting frame time.</p>
+      <div class="tags">
         <span class="tag">URP</span>
         <span class="tag">HDRP</span>
         <span class="tag">HLSL</span>
         <span class="tag">Shader Graph</span>
         <span class="tag">GI</span>
       </div>
-      <h4>specialties</h4>
-      <p>→ Baked and real-time Global Illumination<br>→ Custom shaders for special effects<br>→ Culling, LOD and batching techniques<br>→ Post-processing and color grading</p>
+      <h4>Rendering work</h4>
+      <ul class="detail-list">
+        <li>Baked and real-time global illumination</li>
+        <li>Custom shaders for effects and materials</li>
+        <li>Post-processing and colour grading</li>
+      </ul>
+    `
+  },
+  {
+    id: 'xr',
+    label: 'XR',
+    title: 'XR & prototypes',
+    subtitle: 'VR · AR · interaction',
+    content: `
+      <p>I prototype immersive interactions for VR and AR, with clear feedback and comfortable movement.</p>
+      <div class="tags">
+        <span class="tag">XR</span>
+        <span class="tag">OpenXR</span>
+        <span class="tag">Quest</span>
+        <span class="tag">AR Foundation</span>
+      </div>
+      <h4>Work in this area</h4>
+      <ul class="detail-list">
+        <li>VR interaction and locomotion</li>
+        <li>Mixed reality object manipulation</li>
+        <li>Immersive demos and technical experiments</li>
+      </ul>
     `
   },
   {
     id: 'tools',
     label: 'Tools',
-    color: '#A4292E',
     title: 'Tools',
-    subtitle: 'Editor Tools · Pipelines · Automation',
+    subtitle: 'Editor · pipelines · automation',
     content: `
-      <p>Custom tools and pipelines that speed up production and empower the team.</p>
-      <div>
-        <span class="tag">Editor Scripting</span>
+      <p>I write editor tools that remove repetitive work from production.</p>
+      <div class="tags">
+        <span class="tag">Editor scripting</span>
         <span class="tag">Python</span>
         <span class="tag">Automation</span>
       </div>
-      <p>→ Unity editor extensions and inspectors<br>→ Asset and build pipelines<br>→ Workflow automation</p>
+      <h4>Tools I write</h4>
+      <ul class="detail-list">
+        <li>Unity inspectors and custom editor windows</li>
+        <li>Asset and build pipelines</li>
+        <li>Workflow automation for small teams</li>
+      </ul>
     `
   },
   {
     id: 'technologies',
-    label: 'Technologies',
-    color: '#A4292E',
-    title: 'Technologies',
-    subtitle: 'Engines · Languages · Software',
+    label: 'Toolkit',
+    title: 'Toolkit',
+    subtitle: 'Engines · languages · software',
     content: `
-      <p>A set of technologies and tools used across professional and personal projects.</p>
-      <h4>engine & languages</h4>
-      <div>
+      <p>The tools I reach for most often, grouped by the job they do.</p>
+      <h4>Engine &amp; languages</h4>
+      <div class="tags">
         <span class="tag">Unity</span>
         <span class="tag">C#</span>
         <span class="tag">HLSL</span>
         <span class="tag">Python</span>
       </div>
-      <h4>art & 3D</h4>
-      <div>
+      <h4>Art &amp; 3D</h4>
+      <div class="tags">
         <span class="tag">Blender</span>
         <span class="tag">Substance Painter</span>
         <span class="tag">Shader Graph</span>
       </div>
-      <h4>workflow</h4>
-      <div>
+      <h4>Workflow</h4>
+      <div class="tags">
         <span class="tag">Git</span>
         <span class="tag">Plastic SCM</span>
         <span class="tag">Jira</span>
@@ -135,20 +210,23 @@ const SECTIONS = [
     `
   },
   {
-    id: 'xr-projects',
-    label: 'XR Projects',
-    color: '#A4292E',
-    title: 'XR Projects',
-    subtitle: 'VR · AR · Immersive',
+    id: 'contact',
+    label: 'Contact',
+    title: 'Contact',
+    subtitle: 'Open to work &amp; collaborations',
     content: `
-      <p>Virtual and augmented reality projects focused on immersive, interactive experiences.</p>
-      <div>
-        <span class="tag">XR</span>
-        <span class="tag">OpenXR</span>
-        <span class="tag">Quest</span>
-        <span class="tag">AR Foundation</span>
+      <p>I'm open to gameplay, engine and technical artist roles, and to interesting collaborations.</p>
+      <div class="contact-list">
+        <a class="panel-link" href="mailto:hugorufete@gmail.com">
+          <span>Email</span><strong>hugorufete@gmail.com</strong><span aria-hidden="true">↗</span>
+        </a>
+        <a class="panel-link" href="https://github.com/HugoRufete" target="_blank" rel="noopener noreferrer">
+          <span>GitHub</span><strong>github.com/HugoRufete</strong><span aria-hidden="true">↗</span>
+        </a>
+        <a class="panel-link" href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener noreferrer">
+          <span>LinkedIn</span><strong>linkedin.com/in/hugorufete</strong><span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <p>→ VR interaction and locomotion<br>→ AR prototypes<br>→ Immersive demos and experiments</p>
     `
-  },
+  }
 ];

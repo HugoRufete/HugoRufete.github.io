@@ -1,147 +1,178 @@
 /* =========================================
-   SECTION DATA
-   =========================================
-   El array SECTIONS (contenido del portfolio) vive en js/data.js,
-   que se carga ANTES que este archivo en index.html.
+   RENDER
+   Builds the index, the work grid and the sections from js/data.js.
    ========================================= */
 
-/* =========================================
-   CURSOR
-   ========================================= */
-const cursor = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-(function animateCursor() {
-  cursor.style.left = mx + 'px';
-  cursor.style.top  = my + 'px';
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  cursorRing.style.left = rx + 'px';
-  cursorRing.style.top  = ry + 'px';
-  requestAnimationFrame(animateCursor);
-})();
-
-/* =========================================
-   PARTICLE BACKGROUND
-   ========================================= */
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-
-function resizeCanvas() {
-  canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function initParticles() {
-  particles = [];
-  const count = Math.floor((canvas.width * canvas.height) / 16000);
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      x:  Math.random() * canvas.width,
-      y:  Math.random() * canvas.height,
-      vx: (Math.random() - .5) * 0.22,
-      vy: (Math.random() - .5) * 0.22,
-      r:  Math.random() * 1.2 + .4,
-      a:  Math.random() * 0.30 + 0.06,
-    });
-  }
-}
-
-function drawParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0) p.x = canvas.width;
-    if (p.x > canvas.width) p.x = 0;
-    if (p.y < 0) p.y = canvas.height;
-    if (p.y > canvas.height) p.y = 0;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(164,41,46,${p.a})`;
-    ctx.fill();
-  });
-  requestAnimationFrame(drawParticles);
-}
-initParticles();
-drawParticles();
-
-/* =========================================
-   RENDER — TOC (sidebar) + secciones (contenido)
-   Construye la web a partir de SECTIONS (única fuente de verdad).
-   ========================================= */
-const tocEl      = document.querySelector('.toc');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const tocEl = document.querySelector('.toc');
 const sectionsEl = document.getElementById('sections');
 
-SECTIONS.forEach(s => {
-  /* Índice lateral */
+const number = n => String(n).padStart(2, '0');
+
+function renderWorkGrid() {
+  return `
+    <div class="work-grid">
+      ${PROJECTS.map((project, i) => `
+        <a class="work-card"
+           href="${project.media}"
+           target="_blank"
+           rel="noopener noreferrer">
+          <div class="work-card__media">
+            <img src="${project.image}" alt="${project.title} preview" width="960" height="540" loading="lazy">
+            ${project.type === 'video'
+              ? `<video class="work-card__video" muted loop playsinline preload="none" poster="${project.image}" aria-hidden="true">
+                   <source src="${project.media}" type="video/mp4">
+                 </video>`
+              : ''}
+            <span class="work-card__index" aria-hidden="true">${number(i + 1)}</span>
+            ${project.type === 'video' ? '<span class="work-card__play" aria-hidden="true"></span>' : ''}
+          </div>
+          <div class="work-card__body">
+            <span class="work-card__kind">${project.kind}</span>
+            <h3 class="work-card__title">${project.title}</h3>
+            <span class="work-card__description">${project.description}</span>
+            <span class="work-card__action" aria-hidden="true">View ${project.type === 'video' ? 'Video' : 'Image'} <span>↗</span></span>
+          </div>
+        </a>
+      `).join('')}
+    </div>
+  `;
+}
+
+SECTIONS.forEach((sectionData, i) => {
+  const index = number(i + 1);
+
+  /* Index entry */
   const li = document.createElement('li');
-  const a  = document.createElement('a');
-  a.href = '#' + s.id;
-  a.textContent = s.label;
-  a.style.setProperty('--sc-item', s.color);
-  a.dataset.target = s.id;
-  li.appendChild(a);
+  const link = document.createElement('a');
+  link.href = `#${sectionData.id}`;
+  link.dataset.target = sectionData.id;
+  link.innerHTML = `<span class="toc-index" aria-hidden="true">${index}</span><span>${sectionData.label}</span>`;
+  li.appendChild(link);
   tocEl.appendChild(li);
 
-  /* Sección de contenido */
+  /* Section */
   const section = document.createElement('section');
-  section.className = 'section';
-  section.id = s.id;
-  section.style.setProperty('--sc', s.color);
+  section.className = `section${sectionData.layout === 'work' ? ' section--work' : ''}`;
+  section.id = sectionData.id;
+
+  const body = sectionData.layout === 'work'
+    ? renderWorkGrid()
+    : `<div class="panel">${sectionData.content || ''}</div>`;
+
   section.innerHTML = `
-    <header class="article-heading">
-      <span class="hash" aria-hidden="true">#</span>
-      <h2>${s.title}</h2>
+    <header class="section-heading">
+      <span class="section-index" aria-hidden="true">${index}</span>
+      <div>
+        <h2>${sectionData.title}</h2>
+        <p class="section-subtitle">${sectionData.subtitle}</p>
+      </div>
     </header>
-    <p class="section-sub">${s.subtitle}</p>
-    <div class="card">${s.content}</div>
+    ${body}
   `;
   sectionsEl.appendChild(section);
 });
 
 /* =========================================
-   CARD GLOW — el borde luminoso sigue al ratón
+   SUBTLE WHITE GLOW — follows the pointer
    ========================================= */
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('pointermove', e => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+document.querySelectorAll('.panel, .work-card').forEach(el => {
+  let frame = 0;
+  let lastEvent = null;
+
+  el.addEventListener('pointermove', event => {
+    lastEvent = { x: event.clientX, y: event.clientY };
+    if (frame) return;
+
+    frame = requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${lastEvent.x - rect.left}px`);
+      el.style.setProperty('--my', `${lastEvent.y - rect.top}px`);
+      frame = 0;
+    });
   });
 });
 
 /* =========================================
-   SCROLL-SPY — resalta la sección activa en el TOC.
-   Si no hay ninguna sección dentro de la franja de detección (p. ej. arriba
-   del todo, en la portada), no se marca ningún apartado.
+   MOTION — hover previews and showreel
+   ========================================= */
+const reelToggle = document.querySelector('.reel-toggle');
+
+if (reduceMotion) {
+  document.querySelectorAll('.work-card__video').forEach(video => video.remove());
+
+  const reel = document.querySelector('.masthead-media video');
+  if (reel) {
+    reel.removeAttribute('autoplay');
+    reel.pause();
+  }
+  if (reelToggle) reelToggle.hidden = true;
+} else {
+  if (reelToggle) {
+    const reel = document.querySelector('.masthead-media video');
+    const label = reelToggle.querySelector('.reel-label');
+
+    reelToggle.addEventListener('click', () => {
+      const paused = reel.paused;
+      if (paused) reel.play().catch(() => {});
+      else reel.pause();
+
+      reelToggle.classList.toggle('is-paused', !paused);
+      reelToggle.setAttribute('aria-pressed', String(!paused));
+      reelToggle.setAttribute('aria-label', paused ? 'Pause showreel' : 'Play showreel');
+      label.textContent = paused ? 'Pause' : 'Play';
+    });
+  }
+
+  document.querySelectorAll('.work-card').forEach(card => {
+    const video = card.querySelector('video');
+    if (!video) return;
+
+    const play = () => {
+      const promise = video.play();
+      if (promise && promise.catch) promise.catch(() => {});
+    };
+    const pause = () => video.pause();
+
+    card.addEventListener('pointerenter', play);
+    card.addEventListener('pointerleave', pause);
+    card.addEventListener('focusin', play);
+    card.addEventListener('focusout', pause);
+  });
+}
+
+/* =========================================
+   SCROLL SPY
    ========================================= */
 const tocLinks = {};
 tocEl.querySelectorAll('a').forEach(a => { tocLinks[a.dataset.target] = a; });
+const headerLinks = document.querySelectorAll('.site-nav a');
 
 const visibleSections = new Set();
-const spy = new IntersectionObserver((entries) => {
+const spy = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) visibleSections.add(entry.target.id);
     else visibleSections.delete(entry.target.id);
   });
-  /* El activo es la primera sección (en orden del documento) dentro de la franja;
-     si el set está vacío, no se selecciona nada. */
+
   let activeId = null;
-  for (const s of SECTIONS) {
-    if (visibleSections.has(s.id)) { activeId = s.id; break; }
+  for (const section of SECTIONS) {
+    if (visibleSections.has(section.id)) {
+      activeId = section.id;
+      break;
+    }
   }
-  Object.values(tocLinks).forEach(a => a.classList.toggle('active', a.dataset.target === activeId));
-}, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
 
-document.querySelectorAll('.section').forEach(sec => spy.observe(sec));
+  Object.entries(tocLinks).forEach(([id, a]) => {
+    const active = id === activeId;
+    a.classList.toggle('active', active);
+    if (active) a.setAttribute('aria-current', 'true');
+    else a.removeAttribute('aria-current');
+  });
 
-/* =========================================
-   INTRO SEQUENCE
-   ========================================= */
-setTimeout(() => {
-  document.getElementById('intro-overlay').classList.add('hidden');
-}, 2400);
+  headerLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#${activeId}`);
+  });
+}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+document.querySelectorAll('.section').forEach(section => spy.observe(section));

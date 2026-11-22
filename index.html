@@ -1,100 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Hugo Rufete — Game Developer & Technical Artist. Portfolio of game development, procedural animation and dynamic lighting.">
-<title>Hugo Rufete — Game Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0b0c">
+  <meta name="description" content="Hugo Rufete is a game developer and technical artist. Gameplay, XR and rendering work in Unity.">
+  <title>Hugo Rufete: Game Developer &amp; Technical Artist</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- CUSTOM CURSOR -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+  <header id="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="Hugo Rufete, back to top">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Hugo Rufete</span>
+      </a>
 
-<!-- INTRO LOADING SCREEN -->
-<div id="intro-overlay">
-  <div class="intro-line">HUGO RUFETE</div> 
-  <div class="intro-line">game programmer · technical designer</div>
-  <div class="intro-bar"><div class="intro-bar-fill"></div></div>
-</div>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-<!-- PARTICLE CANVAS -->
-<canvas id="bg-canvas"></canvas>
+      <nav class="site-links" aria-label="External profiles">
+        <a href="https://github.com/HugoRufete" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
 
-<!-- SITE HEADER -->
-<header id="site-header">
-  <a class="brand" href="#top">Hugo Rufete<span>.</span></a>
-  <nav class="site-nav">
-    <a href="#games">Work</a>
-    <a href="#experience">About</a>
-  </nav>
-  <nav class="site-links">
-    <a href="https://github.com/HugoRufete" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
-    <a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-  </nav>
-</header>
+  <main id="main">
+    <div class="page-shell" id="top">
+      <aside class="sidebar" aria-label="Portfolio index">
+        <div class="sidebar-inner">
+          <p class="sidebar-name">Hugo Rufete</p>
+          <p class="sidebar-role">Game developer<br>&amp; technical artist</p>
 
-<!-- MAIN -->
-<main id="top">
-  <div class="layout-split">
-
-    <!-- SIDEBAR -->
-    <aside class="layout-split__sidebar">
-      <div class="sidebar-inner">
-        <h1 class="identity-name">Hugo Rufete</h1>
-        <p class="identity-sub">The <b>Portfolio</b><br>of a <b>Game Developer</b></p>
-
-        <menu class="social-links" aria-label="Social links">
-          <li><a href="https://github.com/HugoRufete" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a></li>
-          <li><a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a></li>
-          <li><a href="mailto:hugorufete@gmail.com" aria-label="Email">Email</a></li>
-        </menu>
-
-        <!-- Table of contents — rellenado por main.js -->
-        <menu class="toc" aria-label="Table of contents"></menu>
-      </div>
-    </aside>
-
-    <!-- CONTENT -->
-    <div class="layout-split__content">
-      <!-- Feature: vídeo hero como banner editorial superior -->
-      <div class="feature">
-        <video class="feature-video" autoplay muted loop playsinline poster="img/ui/hero-poster.png">
-          <source src="video/hero.mp4" type="video/mp4">
-        </video>
-        <div class="feature-overlay">
-          <span class="feature-tag">Game Programmer &amp; Technical Designer</span>
-          
-          <p class="feature-text">
-        Junior Programmer with  <strong>1 year</strong> of experience in the game industry
+          <p class="sidebar-note">
+            Unity · C# · URP<br>
+            Gameplay, XR &amp; rendering
           </p>
 
+          <nav class="sidebar-nav" aria-label="Section index">
+            <p class="sidebar-label">Index</p>
+            <ul class="toc"></ul>
+          </nav>
+
+          <a class="sidebar-email" href="mailto:hugorufete@gmail.com">hugorufete@gmail.com</a>
         </div>
+      </aside>
+
+      <div class="content">
+        <section class="masthead" aria-labelledby="intro-title">
+          <div class="masthead-copy">
+            <p class="eyebrow">Portfolio / 2026</p>
+            <h1 id="intro-title">I build <span class="glow">gameplay systems</span> that feel good to play.</h1>
+            <p class="masthead-lead">
+              Unity developer and technical designer. I work across gameplay,
+              XR and rendering, from the first prototype to the final build.
+            </p>
+            <div class="masthead-actions">
+              <a class="primary-action" href="#work">See Selected Work <span aria-hidden="true">↓</span></a>
+              <a class="text-action" href="mailto:hugorufete@gmail.com">Get in Touch</a>
+            </div>
+          </div>
+
+          <div class="masthead-media">
+            <video autoplay muted loop playsinline preload="metadata" poster="img/ui/hero-poster.webp" aria-hidden="true">
+              <source src="video/hero.mp4" type="video/mp4">
+            </video>
+            <div class="media-caption">
+              <span>Showreel</span>
+              <span>00:25</span>
+            </div>
+            <button class="reel-toggle" type="button" aria-label="Pause showreel" aria-pressed="false">
+              <span class="reel-icon" aria-hidden="true"></span>
+              <span class="reel-label">Pause</span>
+            </button>
+          </div>
+        </section>
+
+        <div id="sections"></div>
       </div>
-
-      <!-- Secciones — rellenadas por main.js desde SECTIONS -->
-      <div id="sections"></div>
     </div>
+  </main>
 
-  </div>
-</main>
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-name">Hugo Rufete</p>
+        <p class="footer-role">Game developer &amp; technical artist</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="https://github.com/HugoRufete" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:hugorufete@gmail.com">Email</a>
+      </nav>
+      <p class="footer-copy">© 2026 Hugo Rufete</p>
+    </div>
+  </footer>
 
-<!-- FOOTER -->
-<footer id="site-footer">
-  <div class="footer-inner">
-    <span class="footer-brand">Hugo Rufete<span>.</span></span>
-    <menu class="social-links" aria-label="More links">
-      <li><a href="https://github.com/HugoRufete" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="https://linkedin.com/in/hugorufete" target="_blank" rel="noopener">LinkedIn</a></li>
-      <li><a href="mailto:hugorufete@gmail.com">Email</a></li>
-    </menu>
-  </div>
-</footer>
-
-<script src="js/data.js"></script>
-<script src="js/main.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
